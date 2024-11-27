@@ -63,6 +63,8 @@ const MyMenu = () => {
       navigate("/lovemom")
     } else if (e.key === "login") {
       navigate("/login")
+    } else if (e.key === "donation") {
+      navigate("/donation")
     }
   }
 

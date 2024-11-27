@@ -11,10 +11,8 @@ import {
 } from "@ant-design/pro-components";
 import { Table, Space, Button, message } from "antd";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 const Catlist = () => {
-  const navigate = useNavigate();
 
   const [modalVisit, setModalVisit] = useState(false);
   const [drawerVisit, setDrawerVisit] = useState(false);

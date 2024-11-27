@@ -1,6 +1,6 @@
 import React from "react";
-import { theme, Button, Card } from "antd";
-import Cat1 from "../components/Images/cat01.jpg"
+import { Button, Card } from "antd";
+import Cat1 from "../components/Images/cat01.jpg";
 
 const { Meta } = Card;
 
@@ -9,7 +9,11 @@ const Adoption = () => {
     <Card
       style={{ width: 250 }}
       cover={<img alt="小八" src={Cat1} />}
-      actions={[<Button type="primary">領養</Button>]}
+      actions={[
+        <a href="/adoption_request">
+          <Button type="primary">領養</Button>
+        </a>,
+      ]}
     >
       <Meta
         title="小八"

@@ -26,7 +26,7 @@ const Login = () => {
           }}
           actions={
             <Space>
-              <Button icon={<UserAddOutlined />}>註冊會員</Button>
+              <Button href="/sign_up" icon={<UserAddOutlined />}>註冊會員</Button>
             </Space>
           }
         >
