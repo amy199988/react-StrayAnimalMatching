@@ -1,5 +1,6 @@
-import React from "react";
-import { Button, Form, Input, DatePicker, Radio } from "antd";
+import React, { useState } from "react";
+import { Button, Form, Input, DatePicker, Radio, Upload } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -32,11 +33,17 @@ const tailFormItemLayout = {
 };
 const SignUp = () => {
   const [form] = Form.useForm();
+  const [showLovehomeForm, setLovehomeForm] = useState(false);
   const onFinish = (fieldsValue) => {
     const values = {
       birthdate: fieldsValue["birthdate"].format("YYYY-MM-DD"),
     };
     console.log("Received values of form: ", values);
+  };
+
+  const handleRoleChange = (e) => {
+    const selectedRole = e.target.value;
+    setLovehomeForm(selectedRole === "role_lovemom");
   };
 
   return (
@@ -167,11 +174,73 @@ const SignUp = () => {
           },
         ]}
       >
-        <Radio.Group>
+        <Radio.Group onChange={handleRoleChange}>
           <Radio value="role_user">普通帳號申請</Radio>
           <Radio value="role_lovemom">愛媽帳號申請</Radio>
         </Radio.Group>
       </Form.Item>
+
+      {showLovehomeForm && (
+        <>
+          <Form.Item
+            name="lovehomeName"
+            label="中途之家名稱"
+            rules={[{ required: true, message: "請輸入中途之家名稱" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name="lovehomeCity"
+            label="中途之家城市"
+            rules={[{ required: true, message: "請輸入中途之家城市" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name="lovehomeDistrict"
+            label="中途之家區域"
+            rules={[{ required: true, message: "請輸入中途之家區域" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name="lovehomeAddress"
+            label="詳細地址"
+            rules={[{ required: true, message: "請輸入詳細地址" }]}
+          >
+            <Input.TextArea showCount maxLength={100} />
+          </Form.Item>
+
+          <Form.Item
+            name="contactInfo"
+            label="聯絡方式"
+            rules={[{ required: true, message: "請輸入聯絡方式" }]}
+          >
+            <Input.TextArea showCount maxLength={100} />
+          </Form.Item>
+
+          <Form.Item
+            name="capacity"
+            label="可收容量"
+            rules={[{ required: true, message: "請輸入數量" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item {...tailFormItemLayout}
+            name="lovehomePhoto"
+            valuePropName="fileList"
+            getValueFromEvent={(e) => e?.fileList}
+          >
+            <Upload accept=".png, .jpg, .jpeg" listType="picture">
+              <Button icon={<UploadOutlined />}>Click to upload</Button>
+            </Upload>
+          </Form.Item>
+        </>
+      )}
 
       <Form.Item {...tailFormItemLayout}>
         <Button type="primary" htmlType="submit">

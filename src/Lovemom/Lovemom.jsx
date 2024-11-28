@@ -7,7 +7,7 @@ const Lovemom = () => {
 
   const handleNavigation = (key) => {
     if (key === "catlist") {
-      navigate("/cat_list");
+      navigate("/lovemom/cat_list");
     }
   };
 
@@ -19,7 +19,7 @@ const Lovemom = () => {
         貓咪清單管理
       </Button>
       <Button>申請領養清單管理</Button>
-      <Button>通報清單管理</Button>
+      <Button>通報救援清單管理</Button>
     </Space>
   );
 };

@@ -40,8 +40,13 @@ const MyMenu = () => {
       icon: <LoginIcon style={{ fontSize: "24px" }} />,
     },
     {
-      label: "會員中心",
+      label: "愛媽會員中心",
       key: "lovemom",
+      icon: <UserIcon style={{ fontSize: "24px" }} />,
+    },
+    {
+      label: "普通會員中心",
+      key: "user",
       icon: <UserIcon style={{ fontSize: "24px" }} />,
     },
     {
@@ -60,13 +65,17 @@ const MyMenu = () => {
     } else if (e.key === "lovehome") {
       navigate("/lovehome");
     } else if (e.key === "lovemom") {
-      navigate("/lovemom")
+      navigate("/lovemom");
+    } else if (e.key === "user") {
+      navigate("/user");
+    } else if (e.key === "manager") {
+      navigate("/manager");
     } else if (e.key === "login") {
-      navigate("/login")
+      navigate("/login");
     } else if (e.key === "donation") {
-      navigate("/donation")
+      navigate("/donation");
     }
-  }
+  };
 
   return (
     <Menu

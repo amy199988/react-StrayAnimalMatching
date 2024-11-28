@@ -10,6 +10,8 @@ import Login from "./User/Login.jsx";
 import AdoptionRequest from "./AdoptionCat/AdoptionRequest.jsx";
 import SignUp from "./User/Sign_up.jsx";
 import Donation from "./Donation/Donation.jsx";
+import User from "./User/User.jsx";
+import Manager from "./Manager/Manager.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 const { Header, Content, Footer } = Layout;
@@ -49,7 +51,9 @@ const App = () => {
             <Route path="/adoption_request" element={<AdoptionRequest />} />
             <Route path="/lovehome" element={<Lovehome />} />
             <Route path="/lovemom" element={<Lovemom />} />
-            <Route path="/cat_list" element={<Catlist />} />
+            <Route path="/lovemom/cat_list" element={<Catlist />} />
+            <Route path="/user" element={<User />} />
+            <Route path="/manager" element={<Manager />} />
             <Route path="/login" element={<Login />} />
             <Route path="/sign_up" element={<SignUp />} />
             <Route path="/donation" element={<Donation />} />
