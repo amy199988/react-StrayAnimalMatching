@@ -2,7 +2,7 @@ import React from "react";
 import { Layout } from "antd";
 import MyMenu from "./components/MyMenu";
 import Adoption from "./AdoptionCat/Adoption.jsx";
-import Home from "./Home.jsx"
+import Home from "./Home.jsx";
 import Lovehome from "./Lovehome/Lovehome.jsx";
 import Lovemom from "./Lovemom/Lovemom.jsx";
 import Catlist from "./Lovemom/Cat_list.jsx";
@@ -12,12 +12,13 @@ import SignUp from "./User/Sign_up.jsx";
 import Donation from "./Donation/Donation.jsx";
 import User from "./User/User.jsx";
 import Manager from "./Manager/Manager.jsx";
+import AllCatlist from "./Manager/AllCatlist.jsx";
+import LRequestList from "./Lovemom/LRequest_list.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 const { Header, Content, Footer } = Layout;
 
 const App = () => {
-
   return (
     <Router>
       <Layout
@@ -52,14 +53,15 @@ const App = () => {
             <Route path="/lovehome" element={<Lovehome />} />
             <Route path="/lovemom" element={<Lovemom />} />
             <Route path="/lovemom/cat_list" element={<Catlist />} />
+            <Route path="/lovemom/request_list" element={<LRequestList />} />
             <Route path="/user" element={<User />} />
             <Route path="/manager" element={<Manager />} />
+            <Route path="/manager/all_cat" element={<AllCatlist />} />
             <Route path="/login" element={<Login />} />
             <Route path="/sign_up" element={<SignUp />} />
             <Route path="/donation" element={<Donation />} />
           </Routes>
         </Content>
-        
         <Footer
           style={{
             textAlign: "center",
