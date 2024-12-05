@@ -10,7 +10,7 @@ import {
   LoginIcon,
 } from "./icons/IndexIcon";
 
-const MyMenu = () => {
+const MyMenu = ({ role, onLogout }) => {
   const navigate = useNavigate();
 
   const items = [
@@ -34,24 +34,42 @@ const MyMenu = () => {
       key: "donation",
       icon: <DonationIcon style={{ fontSize: "24px" }} />,
     },
+    ...(role === "role_user"
+      ? [
+          {
+            label: "普通會員中心",
+            key: "user",
+            icon: <UserIcon style={{ fontSize: "24px" }} />,
+          },
+        ]
+      : []),
+    ...(role === "role_lovemom"
+      ? [
+          {
+            label: "愛媽會員中心",
+            key: "lovemom",
+            icon: <UserIcon style={{ fontSize: "24px" }} />,
+          },
+        ]
+      : []),
+    ...(role === "role_manager"
+      ? [
+          {
+            label: "管理員頁面",
+            key: "manager",
+            icon: <UserIcon style={{ fontSize: "24px" }} />,
+          },
+        ]
+      : []),
     {
       label: "登入會員",
       key: "login",
       icon: <LoginIcon style={{ fontSize: "24px" }} />,
     },
     {
-      label: "愛媽會員中心",
-      key: "lovemom",
-      icon: <UserIcon style={{ fontSize: "24px" }} />,
-    },
-    {
-      label: "普通會員中心",
-      key: "user",
-      icon: <UserIcon style={{ fontSize: "24px" }} />,
-    },
-    {
-      label: "管理員頁面",
-      key: "manager",
+      label: "登出會員",
+      key: "logout",
+      icon: <LoginIcon style={{ fontSize: "24px" }} />,
     },
     {
       label: <a href="/">回到首頁</a>,
@@ -59,11 +77,13 @@ const MyMenu = () => {
     },
   ];
 
+  const filteredItems = items.filter((item) => item.visible !== false);
+
   const onClick = (e) => {
     if (e.key === "adoption") {
       navigate("/adoption");
     } else if (e.key === "lovehome") {
-      navigate("/lovehome");
+      navigate("/common/lovehome_list");
     } else if (e.key === "lovemom") {
       navigate("/lovemom");
     } else if (e.key === "user") {
@@ -71,7 +91,9 @@ const MyMenu = () => {
     } else if (e.key === "manager") {
       navigate("/manager");
     } else if (e.key === "login") {
-      navigate("/login");
+      navigate("/auth/login");
+    } else if (e.key === "logout") {
+      onLogout();
     } else if (e.key === "donation") {
       navigate("/donation");
     }
@@ -81,12 +103,13 @@ const MyMenu = () => {
     <Menu
       theme="light"
       mode="horizontal"
-      items={items}
+      items={filteredItems}
       onClick={onClick}
       style={{
         flex: 1,
         minWidth: 0,
         display: "flex",
+        justifyContent: "center",
         alignItems: "center",
       }}
     />

@@ -1,16 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { LockOutlined, UserOutlined, UserAddOutlined } from "@ant-design/icons";
 import {
   LoginForm,
   ProConfigProvider,
-  ProFormCheckbox,
   ProFormText,
 } from "@ant-design/pro-components";
 import { theme, Button, Space } from "antd";
-import Cat from "../components/icons/cat-space.png";
+import Cat from "../../components/icons/cat-space.png";
 
-const Login = () => {
+const Login = ({onLogin}) => {
   const { token } = theme.useToken();
+  const [account, setAccount] = useState();
+  const [password, setPassword] = useState();
+
+  const handleFinish = () => {
+    onLogin(account, password); // 呼叫 onLogin 進行登入驗證
+  };
 
   return (
     <ProConfigProvider hashed={false}>
@@ -19,6 +24,7 @@ const Login = () => {
           logo={Cat}
           title="浪浪相親網站"
           subTitle="Stray Animal Matching"
+          onFinish={handleFinish}
           submitter={{
             searchConfig: {
               submitText: "登入", // 修改按鈕文字
@@ -26,12 +32,14 @@ const Login = () => {
           }}
           actions={
             <Space>
-              <Button href="/sign_up" icon={<UserAddOutlined />}>註冊會員</Button>
+              <Button href="/auth/sign_up" icon={<UserAddOutlined />}>註冊會員</Button>
             </Space>
           }
         >
           <ProFormText
-            name="username"
+            name="account"
+            value={account}
+            onChange={(e) => setAccount(e.target.value)}
             fieldProps={{
               size: "large",
               prefix: <UserOutlined className={"prefixIcon"} />,
@@ -46,6 +54,8 @@ const Login = () => {
           />
           <ProFormText.Password
             name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             fieldProps={{
               size: "large",
               prefix: <LockOutlined className={"prefixIcon"} />,
@@ -63,12 +73,10 @@ const Login = () => {
               marginBlockEnd: 24,
             }}
           >
-            <ProFormCheckbox noStyle name="autoLogin">
-              自動登入
-            </ProFormCheckbox>
             <a
               style={{
                 float: "right",
+                marginBottom: "12px",
               }}
             >
               忘記密碼

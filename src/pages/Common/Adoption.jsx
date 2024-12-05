@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Card } from "antd";
-import Cat1 from "../components/Images/cat01.jpg";
+import Cat1 from "../../components/Images/cat01.jpg";
 
 const { Meta } = Card;
 
