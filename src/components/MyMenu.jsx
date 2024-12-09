@@ -85,7 +85,7 @@ const MyMenu = ({ role, onLogout }) => {
     } else if (e.key === "lovehome") {
       navigate("/common/lovehome_list");
     } else if (e.key === "lovemom") {
-      navigate("/lovemom");
+      navigate("/lovehome");
     } else if (e.key === "user") {
       navigate("/user");
     } else if (e.key === "manager") {

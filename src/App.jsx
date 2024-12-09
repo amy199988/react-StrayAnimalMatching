@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Layout } from "antd";
+import { Layout, message } from "antd";
 import MyMenu from "./components/MyMenu";
 import Adoption from "./pages/Common/Adoption.jsx";
 import Home from "./Home.jsx";
@@ -21,6 +21,7 @@ const { Header, Content, Footer } = Layout;
 
 const App = () => {
   const [role, setRole] = useState("");
+  const [messageApi, contextHolder] = message.useMessage();
 
   useEffect(() => {
     // 假設用戶資料存在localStorage
@@ -28,90 +29,109 @@ const App = () => {
     if (userDto) {
       setRole(userDto.role); // 取得role
     }
-  }, [])
+  }, []);
 
   const handleLogin = async (account, password) => {
     try {
       const data = await login(account, password); // 使用登入服務方法
 
       if (data.message === "登入成功") {
-        alert("登入成功");
-        localStorage.setItem("userDto",JSON.stringify(data.data));
+        messageApi.success("登入成功");
+        localStorage.setItem("userDto", JSON.stringify(data.data));
         setRole(data.data.role);
-        window.location.href = "/";
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1000);
       } else {
-        alert("登入失敗");
+        messageApi.warning("登入失敗，請重新登入。");
       }
     } catch (error) {
-      console.error("登入錯誤:", error);
+      if (error.message.includes("無此使用者")) {
+        console.error("無此使用者:", error);
+        messageApi.error("無此使用者，請重新輸入。");
+      } else if (error.message.includes("密碼錯誤")) {
+        console.error("密碼錯誤", error);
+        messageApi.error("密碼錯誤，請重新輸入。");
+      } else {
+        console.error("登入錯誤:", error);
+        messageApi.error("系統錯誤，請稍後再試。");
+      }
     }
   };
 
   const handleLogout = async () => {
     try {
       const apiResponse = await logout(); // 使用登出服務方法
-      alert(apiResponse.data || "已成功登出！");
+      messageApi.success(apiResponse.data || "登出成功");
       localStorage.removeItem("userDto"); // 清除登入資訊
       setRole(""); // 重置角色
-      window.location.href = "/";
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1000);
     } catch (error) {
       console.error("登出錯誤:", error);
     }
   };
 
   return (
-    <Router>
-      <Layout
-        style={{
-          minHeight: "100vh",
-          width: "100vw",
-        }}
-      >
-        <Header
+    <>
+      {contextHolder}
+      <Router>
+        <Layout
           style={{
-            background: "#ffffff",
-            position: "sticky",
-            top: 0,
-            zIndex: 1,
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
+            minHeight: "100vh",
+            width: "100vw",
           }}
         >
-          <MyMenu role={role} onLogout={handleLogout}/>
-        </Header>
-        <Content
-          style={{
-            padding: "48px",
-            minHeight: "400px",
-          }}
-        >
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/adoption" element={<Adoption />} />
-            <Route path="/adoption_request" element={<AdoptionRequest />} />
-            <Route path="/common/lovehome_list" element={<Lovehome />} />
-            <Route path="/lovemom" element={<Lovemom />} />
-            <Route path="/lovemom/cat_list" element={<Catlist />} />
-            <Route path="/lovemom/request_list" element={<LRequestList />} />
-            <Route path="/user" element={<User />} />
-            <Route path="/manager" element={<Manager />} />
-            <Route path="/manager/all_cat" element={<AllCatlist />} />
-            <Route path="/auth/login" element={<Login onLogin={handleLogin}/>} />
-            <Route path="/auth/sign_up" element={<SignUp />} />
-            <Route path="/donation" element={<Donation />} />
-          </Routes>
-        </Content>
-        <Footer
-          style={{
-            textAlign: "center",
-            background: "#dedede",
-          }}
-        >
-          Stary Animal Matching ©{new Date().getFullYear()} Created by Ant UED
-        </Footer>
-      </Layout>
-    </Router>
+          <Header
+            style={{
+              background: "#ffffff",
+              position: "sticky",
+              top: 0,
+              zIndex: 1,
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <MyMenu role={role} onLogout={handleLogout} />
+          </Header>
+          <Content
+            style={{
+              padding: "48px",
+              minHeight: "400px",
+            }}
+          >
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/adoption" element={<Adoption />} />
+              <Route path="/adoption_request" element={<AdoptionRequest />} />
+              <Route path="/common/lovehome_list" element={<Lovehome />} />
+              <Route path="/lovehome" element={<Lovemom />} />
+              <Route path="/lovehome/cat_list" element={<Catlist />} />
+              <Route path="/lovehome/request_list" element={<LRequestList />} />
+              <Route path="/user" element={<User />} />
+              <Route path="/manager" element={<Manager />} />
+              <Route path="/manager/all_cat" element={<AllCatlist />} />
+              <Route
+                path="/auth/login"
+                element={<Login onLogin={handleLogin} />}
+              />
+              <Route path="/auth/sign_up" element={<SignUp />} />
+              <Route path="/donation" element={<Donation />} />
+            </Routes>
+          </Content>
+          <Footer
+            style={{
+              textAlign: "center",
+              background: "#dedede",
+            }}
+          >
+            Stary Animal Matching ©{new Date().getFullYear()} Created by Ant UED
+          </Footer>
+        </Layout>
+      </Router>
+    </>
   );
 };
 

@@ -46,7 +46,8 @@ export const login = async (account, password) => {
   });
 
   if (!response.ok) {
-    throw new Error("登入失敗");
+    const errorText = await response.text();
+    throw new Error(`登入失敗: ${errorText}`);
   }
 
   return response.json();

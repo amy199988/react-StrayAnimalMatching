@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Button, Space, Form, Input, DatePicker, Radio, Row, Col } from "antd";
 import { useNavigate } from "react-router-dom";
-  import moment from "moment";
-import { lovemomData } from "../../services/lovehome";
+import moment from "moment";
+import { lovemomData } from "../../services/lovehomeService";
 
 const Lovemom = () => {
   const navigate = useNavigate();
@@ -42,9 +42,9 @@ const Lovemom = () => {
 
   const handleNavigation = (key) => {
     if (key === "catlist") {
-      navigate("/lovemom/cat_list");
+      navigate("/lovehome/cat_list");
     } else if (key === "requestlist") {
-      navigate("/lovemom/request_list");
+      navigate("/lovehome/request_list");
     }
   };
 

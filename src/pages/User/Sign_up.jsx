@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, Input, DatePicker, Radio, Upload } from "antd";
+import { Button, Form, Input, DatePicker, Radio, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { sign_up } from "../../services/authService";
 const formItemLayout = {
@@ -36,6 +36,7 @@ const SignUp = () => {
   const [form] = Form.useForm();
   const [showLovehomeForm, setLovehomeForm] = useState(false);
   const [lovehomeImageBase64, setlovehomeImageBase64] = useState("");
+  const [messageApi, contextHolder] = message.useMessage();
 
   const onFinish = async (fieldsValue) => {
     console.log("表單資料：", fieldsValue);
@@ -59,7 +60,7 @@ const SignUp = () => {
               lovehomeAddress: fieldsValue.lovehomeAddress,
               contactInfo: fieldsValue.contactInfo,
               capacity: fieldsValue.capacity,
-              lovehome_Url: lovehomeImageBase64,
+              lovehomeImage_Base64: lovehomeImageBase64,
             }
           : null,
     };
@@ -70,14 +71,16 @@ const SignUp = () => {
       const signup = await sign_up(userData);
       if (signup.message === "註冊成功") {
         console.log("註冊成功", userData);
-        alert("註冊成功");
-        window.location.href = "/";
+        messageApi.success("註冊成功");
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1000);
       }
     } catch (error) {
       if (error.message.includes("已存在")) {
-        alert("帳號已存在，請重新註冊");
-      }else {
-        alert("註冊失敗，請重新註冊");
+        messageApi.error("帳號已存在，請重新輸入註冊。");
+      } else {
+        messageApi.error("註冊失敗，請重新輸入註冊。");
       }
       console.error("註冊錯誤:", error);
     }
@@ -303,7 +306,7 @@ const SignUp = () => {
               beforeUpload={() => false} // 禁用自動上傳
               onChange={handleImageUpload}
             >
-              <Button icon={<UploadOutlined />}>Click to upload</Button>
+              <Button icon={<UploadOutlined />}>上傳照片</Button>
             </Upload>
           </Form.Item>
         </>

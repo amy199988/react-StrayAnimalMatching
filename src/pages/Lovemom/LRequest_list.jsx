@@ -5,16 +5,15 @@ import { useState } from "react";
 
 const LRequestList = () => {
   const [dataSource, setDataSource] = useState([]);
-  const [editableKeys, setEditableRowKeys] = useState([]);
 
   useEffect(() => {
     const initialData = [
       {
         request_number: "1",
-        applicant_id: "1",
-        adoptedcat_id: "小八",
+        applicant: "大八",
+        adoptedcat: "小八",
         request_date: "123",
-        request_status: "open",
+        request_status: "all",
       },
     ];
     setDataSource(initialData);
@@ -27,13 +26,13 @@ const LRequestList = () => {
       readonly: true,
     },
     {
-      title: "申請領養者編號",
-      dataIndex: "applicant_id",
+      title: "申請領養者名稱",
+      dataIndex: "applicant",
       readonly: true,
     },
     {
-      title: "被領養貓咪編號",
-      dataIndex: "adoptedcat_id",
+      title: "貓咪編號",
+      dataIndex: "adoptedcat",
       readonly: true,
     },
     {
@@ -47,26 +46,29 @@ const LRequestList = () => {
       dataIndex: "request_status",
       valueType: "select",
       valueEnum: {
-        all: { text: "全部", status: "Default" },
+        all: { text: "待辦中", status: "Default" },
         open: {
-          text: "未解决",
+          text: "未通過",
           status: "Error",
         },
         closed: {
-          text: "已解决",
+          text: "已通過",
           status: "Success",
         },
       },
     },
-  ];
-
-  const data = [
     {
-      request_number: "1",
-      applicant_id: "1",
-      adoptedcat_id: "小八",
-      request_date: "123",
-      request_status: "closed",
+      title: "操作",
+      valueType: "option",
+      render: (_, record) => (
+        <a
+          onClick={() => {
+            setSelectedRecord(record); // 設定當前記錄
+          }}
+        >
+          查看
+        </a>
+      ),
     },
   ];
 
@@ -84,7 +86,7 @@ const LRequestList = () => {
       }}
     >
       <EditableProTable
-        headerTitle="可编辑表格"
+        headerTitle="申請領養清單"
         columns={columns}
         rowKey="request_number"
         scroll={{
@@ -94,15 +96,7 @@ const LRequestList = () => {
         onChange={handleChange}
         recordCreatorProps={false}
         editable={{
-          type: "multiple",
-          editableKeys,
-          actionRender: (row, config, defaultDoms) => {
-            return [defaultDoms.delete];
-          },
-          onValuesChange: (record, recordList) => {
-            setDataSource(recordList);
-          },
-          onChange: setEditableRowKeys,
+          type: "single",
         }}
       />
     </Space>

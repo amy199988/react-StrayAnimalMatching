@@ -27,7 +27,7 @@ const Lovehome = () => {
           <Col span={6} key={lovehome.lovehomeId}>
             <Card
               style={{ width: 250 }}
-              cover={<img alt="中途之家1" src={lovehome.lovehome_Url} />}
+              cover={<img alt={lovehome.lovehomeId} src={lovehome.lovehomeImage_Base64} />}
             >
               <Meta
                 title={lovehome.lovehomeName}
