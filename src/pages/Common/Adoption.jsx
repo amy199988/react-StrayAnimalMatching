@@ -29,7 +29,7 @@ const Adoption = () => {
               style={{ width: 250 }}
               cover={<img alt={cat.catId} src={cat.catImage_Base64} />}
               actions={[
-                <a href="/adoption_request">
+                <a href="/common/adoption_request">
                   <Button type="primary">領養</Button>
                 </a>,
               ]}

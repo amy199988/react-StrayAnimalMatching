@@ -45,6 +45,8 @@ const Lovemom = () => {
       navigate("/lovehome/cat_list");
     } else if (key === "requestlist") {
       navigate("/lovehome/request_list");
+    } else if (key === "reportlist") {
+      navigate("/lovehome/report_list");
     }
   };
 
@@ -67,7 +69,9 @@ const Lovemom = () => {
         <Button onClick={() => handleNavigation("requestlist")}>
           申請領養清單管理
         </Button>
-        <Button>通報救援清單管理</Button>
+        <Button onClick={() => handleNavigation("reportlist")}>
+          通報救援清單管理
+        </Button>
       </Space>
       <Row
         gutter={16}

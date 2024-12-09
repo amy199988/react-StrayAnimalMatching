@@ -14,6 +14,9 @@ import User from "./pages/User/User.jsx";
 import Manager from "./pages/Manager/Manager.jsx";
 import AllCatlist from "./pages/Manager/AllCatlist.jsx";
 import LRequestList from "./pages/Lovemom/LRequest_list.jsx";
+import RequestInfo from "./pages/Lovemom/Request_info.jsx";
+import Report from "./pages/Common/Report.jsx";
+import LReportList from "./pages/Lovemom/LReport_list.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { login, logout } from "./services/authService.js";
 
@@ -98,18 +101,22 @@ const App = () => {
           </Header>
           <Content
             style={{
+              background: "#efefef",
               padding: "48px",
               minHeight: "400px",
             }}
           >
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/adoption" element={<Adoption />} />
-              <Route path="/adoption_request" element={<AdoptionRequest />} />
+              <Route path="/common/report" element={<Report />} />
+              <Route path="/common/adoption" element={<Adoption />} />
+              <Route path="/common/adoption_request" element={<AdoptionRequest />} />
               <Route path="/common/lovehome_list" element={<Lovehome />} />
               <Route path="/lovehome" element={<Lovemom />} />
               <Route path="/lovehome/cat_list" element={<Catlist />} />
               <Route path="/lovehome/request_list" element={<LRequestList />} />
+              <Route path="/lovehome/request_list/info" element={<RequestInfo />} />
+              <Route path="/lovehome/report_list" element={<LReportList />} />
               <Route path="/user" element={<User />} />
               <Route path="/manager" element={<Manager />} />
               <Route path="/manager/all_cat" element={<AllCatlist />} />

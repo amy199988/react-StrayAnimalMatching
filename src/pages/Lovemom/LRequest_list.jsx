@@ -13,7 +13,7 @@ const LRequestList = () => {
         applicant: "大八",
         adoptedcat: "小八",
         request_date: "123",
-        request_status: "all",
+        request_status: "pending",
       },
     ];
     setDataSource(initialData);
@@ -31,7 +31,7 @@ const LRequestList = () => {
       readonly: true,
     },
     {
-      title: "貓咪編號",
+      title: "貓咪名稱",
       dataIndex: "adoptedcat",
       readonly: true,
     },
@@ -46,12 +46,15 @@ const LRequestList = () => {
       dataIndex: "request_status",
       valueType: "select",
       valueEnum: {
-        all: { text: "待辦中", status: "Default" },
-        open: {
+        pending: {
+          text: "待辦中",
+          status: "Processing",
+        },
+        rejected: {
           text: "未通過",
           status: "Error",
         },
-        closed: {
+        approved: {
           text: "已通過",
           status: "Success",
         },
@@ -63,7 +66,7 @@ const LRequestList = () => {
       render: (_, record) => (
         <a
           onClick={() => {
-            setSelectedRecord(record); // 設定當前記錄
+            window.location.href = "/lovehome/request_list/info";
           }}
         >
           查看

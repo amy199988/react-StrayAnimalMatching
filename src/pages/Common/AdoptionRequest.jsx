@@ -1,18 +1,16 @@
+import React from 'react'
 import {
   ProForm,
   ProFormDigit,
   ProFormText,
   ProFormCheckbox,
 } from "@ant-design/pro-components";
-import { useRef } from "react";
 
 export default function AdoptionRequest() {
-  const formRef = useRef();
 
   return (
     <ProForm
       onFinish={(values) => console.log(values)}
-      formRef={formRef}
       autoFocusFirstInput
     >
       <ProForm.Group>

@@ -327,6 +327,7 @@ const Catlist = () => {
               onChange: handleImageUpload,
             }}
             fileList={fileList}
+            rules={[{ required: true, message: "請上傳照片"}]}
           />
         </ModalForm>
 
@@ -420,6 +421,7 @@ const Catlist = () => {
               onChange: handleImageUpload,
             }}
             fileList={fileList}
+            rules={[{ required: true, message: "請上傳照片"}]}
           />
         </DrawerForm>
         <Table columns={columns} dataSource={catlistData} />

@@ -80,8 +80,10 @@ const MyMenu = ({ role, onLogout }) => {
   const filteredItems = items.filter((item) => item.visible !== false);
 
   const onClick = (e) => {
-    if (e.key === "adoption") {
-      navigate("/adoption");
+    if (e.key === "report") {
+      navigate("/common/report");
+    } else if (e.key === "adoption") {
+      navigate("/common/adoption");
     } else if (e.key === "lovehome") {
       navigate("/common/lovehome_list");
     } else if (e.key === "lovemom") {
