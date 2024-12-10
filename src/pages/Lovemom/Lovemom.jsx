@@ -61,7 +61,7 @@ const Lovemom = () => {
     >
       <Space wrap style={{ marginBottom: "48px" }}>
         <Button>修改會員資料</Button>
-        <Button>修改密碼</Button>
+        <Button href="/lovemom/password">修改密碼</Button>
         <Button>修改中途資料</Button>
         <Button onClick={() => handleNavigation("catlist")}>
           貓咪清單管理

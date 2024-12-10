@@ -7,6 +7,8 @@ import Lovehome from "./pages/Common/Lovehome.jsx";
 import Lovemom from "./pages/Lovemom/Lovemom.jsx";
 import Catlist from "./pages/Lovemom/Cat_list.jsx";
 import Login from "./pages/User/Login.jsx";
+import UpdatePassword from "./pages/User/Update_password.jsx";
+import LovemomUpdatePassword from "./pages/Lovemom/Update_password.jsx";
 import AdoptionRequest from "./pages/Common/AdoptionRequest.jsx";
 import SignUp from "./pages/User/Sign_up.jsx";
 import Donation from "./pages/Common/Donation.jsx";
@@ -113,11 +115,13 @@ const App = () => {
               <Route path="/common/adoption_request" element={<AdoptionRequest />} />
               <Route path="/common/lovehome_list" element={<Lovehome />} />
               <Route path="/lovehome" element={<Lovemom />} />
+              <Route path="/lovemom/password" element={<LovemomUpdatePassword />} />
               <Route path="/lovehome/cat_list" element={<Catlist />} />
               <Route path="/lovehome/request_list" element={<LRequestList />} />
               <Route path="/lovehome/request_list/info" element={<RequestInfo />} />
               <Route path="/lovehome/report_list" element={<LReportList />} />
               <Route path="/user" element={<User />} />
+              <Route path="/user/password" element={<UpdatePassword />} />
               <Route path="/manager" element={<Manager />} />
               <Route path="/manager/all_cat" element={<AllCatlist />} />
               <Route
