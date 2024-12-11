@@ -13,7 +13,8 @@ export const userData = async () => {
   })
 
   if (!response.ok) {
-    throw new Error("無法取得會員資料");
+    const errorDetails = await response.text();
+    throw new Error(`無法取得會員資料: ${errorDetails}`);
   }
 
   return response.json();
@@ -41,7 +42,26 @@ export const Update_password = async (oldPassword, newPassword) => {
   });
 
   if (!response.ok) {
-    throw new Error("修改失敗");
+    const errorDetails = await response.text();
+    throw new Error(`"修改失敗: ${errorDetails}`);
+  }
+
+  return response.json();
+};
+
+/**
+ * 查看領養申請追蹤
+ * @returns {Promise<Object>} 包含結果的 API
+ */
+export const userRequest = async () => {
+  const response = await fetch(`${API_BASE_URL}/user/request`, {
+    method: "GET",
+    credentials: "include",
+  })
+
+  if (!response.ok) {
+    const errorDetails = await response.text();
+    throw new Error(`無法取得領養申請: ${errorDetails}`);
   }
 
   return response.json();

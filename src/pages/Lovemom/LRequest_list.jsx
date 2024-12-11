@@ -1,23 +1,57 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { EditableProTable } from "@ant-design/pro-components";
-import { Space } from "antd";
-import { useState } from "react";
+import { Space, message, Popconfirm } from "antd";
+import { useNavigate } from "react-router-dom";
+import { lovehomeRequest, deleteRequest } from "../../services/lovehomeService";
 
 const LRequestList = () => {
   const [dataSource, setDataSource] = useState([]);
+  const navigate = useNavigate();
+
+  const confirm = async(request_number) => {
+    try {
+      await deleteRequest(request_number);
+      setDataSource((prevDataSource) =>
+        prevDataSource.filter(
+          (request) => request.request_number !== request_number
+        )
+      );
+      message.success("刪除成功！");
+    } catch (error) {
+      console.error("Error delete request:", error);
+      message.error("刪除失敗，請稍後再試。");
+    }
+  };
+  const cancel = (e) => {
+    console.log(e);
+    message.error("已取消刪除");
+  };
+
+  const fetchRequestList = async () => {
+    try {
+      const apiResponse = await lovehomeRequest();
+      console.log("API Response:", apiResponse);
+
+      const requests = apiResponse.data.map((request, index) => ({
+        request_number: request.requestNumber || `request-${index}`,
+        applicant: request.userDto.userName,
+        adoptedcat: request.catDto.catName,
+        request_date: request.requstDate,
+        request_status: request.requestStatus,
+      }));
+      setDataSource(requests);
+    } catch (error) {
+      console.error("Error fetching requestlist:", error);
+    }
+  };
 
   useEffect(() => {
-    const initialData = [
-      {
-        request_number: "1",
-        applicant: "大八",
-        adoptedcat: "小八",
-        request_date: "123",
-        request_status: "pending",
-      },
-    ];
-    setDataSource(initialData);
+    fetchRequestList();
   }, []);
+
+  const onClick = (request_number) => {
+    navigate(`/lovehome/request_list/info?request_number=${request_number}`);
+  };
 
   const columns = [
     {
@@ -64,21 +98,22 @@ const LRequestList = () => {
       title: "操作",
       valueType: "option",
       render: (_, record) => (
-        <a
-          onClick={() => {
-            window.location.href = "/lovehome/request_list/info";
-          }}
-        >
-          查看
-        </a>
+        <Space size="middle">
+          <a onClick={() => onClick(record.request_number)}>查看</a>
+          <Popconfirm
+            title="刪除"
+            description="確定要刪除此筆清單嗎?"
+            onConfirm={() => confirm(record.request_number)}
+            onCancel={cancel}
+            okText="Yes"
+            cancelText="No"
+          >
+            <a>刪除</a>
+          </Popconfirm>
+        </Space>
       ),
     },
   ];
-
-  const handleChange = (newData) => {
-    console.log("資料已變更:", newData);
-    setDataSource(newData);
-  };
 
   return (
     <Space
@@ -96,7 +131,6 @@ const LRequestList = () => {
           x: 960,
         }}
         value={dataSource}
-        onChange={handleChange}
         recordCreatorProps={false}
         editable={{
           type: "single",

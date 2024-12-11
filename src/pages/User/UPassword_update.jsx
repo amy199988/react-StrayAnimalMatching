@@ -1,13 +1,12 @@
-import React from 'react';
-import { Button, Form, Input, Space, message } from 'antd';
-import { Update_password as UpdatePasswordAPI } from '../../services/userService'; // 假設 API 函式存放在 api.js
-
+import React, { useEffect, useState } from "react";
+import { Button, Form, Input, Space, message } from "antd";
+import { Update_password as UpdatePasswordAPI } from "../../services/userService"; // 假設 API 函式存放在 api.js
 
 const SubmitButton = ({ form, children }) => {
-  const [submittable, setSubmittable] = React.useState(false);
+  const [submittable, setSubmittable] = useState(false);
 
   const values = Form.useWatch([], form);
-  React.useEffect(() => {
+  useEffect(() => {
     form
       .validateFields({
         validateOnly: true,
@@ -52,7 +51,6 @@ const UpdatePassword = () => {
       }}
     >
       <Form
-
         form={form}
         name="updatePassword"
         layout="vertical"
@@ -110,10 +108,10 @@ const UpdatePassword = () => {
 
         <Form.Item>
           <Space>
-            <SubmitButton form={form}>送出更改</SubmitButton>
             <Button htmlType="reset" onClick={() => form.resetFields()}>
               重設
             </Button>
+            <SubmitButton form={form}>送出更改</SubmitButton>
           </Space>
         </Form.Item>
       </Form>

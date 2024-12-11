@@ -22,7 +22,7 @@ const Login = ({onLogin}) => {
       <div style={{ backgroundColor: token.colorBgContainer }}>
         <LoginForm
           logo={Cat}
-          title="浪浪相親網站"
+          title="浪浪配對網站"
           subTitle="Stray Animal Matching"
           onFinish={handleFinish}
           submitter={{

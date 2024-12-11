@@ -12,7 +12,8 @@ export const lovehome_list = async () => {
   });
 
   if (!response.ok) {
-    throw new Error("無法取得中途之家資料");
+    const errorDetails = await response.text();
+    throw new Error(`無法取得中途之家資料: ${errorDetails}`);
   }
 
   return response.json();
@@ -23,7 +24,7 @@ export const lovehome_list = async () => {
  * @returns {Promise<Object>} 包含結果的 API
  */
 export const adoptioncat_list = async () => {
-  const response = await fetch(`${API_BASE_URL}/common/cat_alladoption`, {
+  const response = await fetch(`${API_BASE_URL}/common/adoption`, {
     method: "GET",
   });
 
@@ -33,4 +34,33 @@ export const adoptioncat_list = async () => {
   }
 
   return response.json();
+}
+
+/**
+ * 新增申請領養貓咪清單
+ * @param {Object} newRequest 新申請領養清單的資料
+ * @param {Number} catId
+ * @returns {Promise<Object>} 包含新增結果的 API
+ */
+export const request = async (newRequest,catId) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/common/adoption_request/${catId}`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newRequest),
+    });
+  
+    if (!response.ok) {
+      const errorDetails = await response.text();
+      throw new Error(`新增領養清單失敗: ${errorDetails}`);
+    }
+  
+    return response.json();
+  } catch (error) {
+    console.error("API錯誤:", error);
+    throw error;
+  }
 }

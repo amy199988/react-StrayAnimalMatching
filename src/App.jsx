@@ -7,8 +7,8 @@ import Lovehome from "./pages/Common/Lovehome.jsx";
 import Lovemom from "./pages/Lovemom/Lovemom.jsx";
 import Catlist from "./pages/Lovemom/Cat_list.jsx";
 import Login from "./pages/User/Login.jsx";
-import UpdatePassword from "./pages/User/Update_password.jsx";
-import LovemomUpdatePassword from "./pages/Lovemom/Update_password.jsx";
+import UpdatePassword from "./pages/User/UPassword_update.jsx";
+import LovemomUpdatePassword from "./pages/Lovemom/LPassword_update.jsx";
 import AdoptionRequest from "./pages/Common/AdoptionRequest.jsx";
 import SignUp from "./pages/User/Sign_up.jsx";
 import Donation from "./pages/Common/Donation.jsx";
@@ -16,9 +16,11 @@ import User from "./pages/User/User.jsx";
 import Manager from "./pages/Manager/Manager.jsx";
 import AllCatlist from "./pages/Manager/AllCatlist.jsx";
 import LRequestList from "./pages/Lovemom/LRequest_list.jsx";
-import RequestInfo from "./pages/Lovemom/Request_info.jsx";
+import LRequestInfo from "./pages/Lovemom/LRequest_info.jsx";
 import Report from "./pages/Common/Report.jsx";
 import LReportList from "./pages/Lovemom/LReport_list.jsx";
+import URequestList from "./pages/User/URequest_list.jsx";
+import URequestInfo from "./pages/User/URequest_info.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { login, logout } from "./services/authService.js";
 
@@ -118,10 +120,12 @@ const App = () => {
               <Route path="/lovemom/password" element={<LovemomUpdatePassword />} />
               <Route path="/lovehome/cat_list" element={<Catlist />} />
               <Route path="/lovehome/request_list" element={<LRequestList />} />
-              <Route path="/lovehome/request_list/info" element={<RequestInfo />} />
+              <Route path="/lovehome/request_list/info" element={<LRequestInfo />} />
               <Route path="/lovehome/report_list" element={<LReportList />} />
               <Route path="/user" element={<User />} />
               <Route path="/user/password" element={<UpdatePassword />} />
+              <Route path="/user/request_list" element={<URequestList />} />
+              <Route path="/user/request_list/info" element={<URequestInfo />} />
               <Route path="/manager" element={<Manager />} />
               <Route path="/manager/all_cat" element={<AllCatlist />} />
               <Route

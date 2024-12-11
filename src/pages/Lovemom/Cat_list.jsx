@@ -115,7 +115,7 @@ const Catlist = () => {
         return false;
       }
     } catch (error) {
-      messageApi.error("更新失敗"), 0;
+      messageApi.error("更新失敗");
       console.error("更新錯誤:", error);
       return false;
     }
@@ -218,13 +218,13 @@ const Catlist = () => {
       width: "10%",
     },
     {
-      title: "",
+      title: "操作",
       dataIndex: "action",
       width: "12%",
       render: (_, record) => (
         <Space size="middle">
-          <a onClick={() => handleNavigation("catupdate", record)}>Update</a>
-          <a>Delete</a>
+          <a onClick={() => handleNavigation("catupdate", record)}>更新</a>
+          <a>刪除</a>
         </Space>
       ),
     },
@@ -421,7 +421,6 @@ const Catlist = () => {
               onChange: handleImageUpload,
             }}
             fileList={fileList}
-            rules={[{ required: true, message: "請上傳照片"}]}
           />
         </DrawerForm>
         <Table columns={columns} dataSource={catlistData} />

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card, Row, Col } from "antd";
+import { useNavigate } from "react-router-dom";
 import { adoptioncat_list } from "../../services/commonService";
 
 const { Meta } = Card;
 
 const Adoption = () => {
+  const navigate = useNavigate();
   const [adoptionCats, setadoptionCats] = useState([]);
 
   useEffect(() => {
@@ -20,6 +22,10 @@ const Adoption = () => {
     loadCats();
   }, []);
 
+  const handleAdopt = (catId) => {
+    navigate(`/common/adoption_request?catId=${catId}`);
+  };
+
   return (
     <Row gutter={16}>
       {adoptionCats && adoptionCats.length > 0 ? (
@@ -29,9 +35,9 @@ const Adoption = () => {
               style={{ width: 250 }}
               cover={<img alt={cat.catId} src={cat.catImage_Base64} />}
               actions={[
-                <a href="/common/adoption_request">
-                  <Button type="primary">領養</Button>
-                </a>,
+                <Button type="primary" onClick={() => handleAdopt(cat.catId)}>
+                  領養
+                </Button>,
               ]}
             >
               <Meta
