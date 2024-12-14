@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Descriptions, message } from "antd";
+import { Descriptions } from "antd";
 import { useSearchParams } from "react-router-dom";
 import { Requests } from "../../services/lovehomeService";
 
@@ -9,7 +9,6 @@ const URequestInfo = () => {
   const [requestData, setrequestData] = useState(null);
   const [searchParams] = useSearchParams();
   const request_number = searchParams.get("request_number");
-  const [messageApi, contextHolder] = message.useMessage();
 
   useEffect(() => {
     const loadRequestData = async () => {
@@ -51,11 +50,6 @@ const URequestInfo = () => {
     if (!date) return "加載中...";
     const d = new Date(date);
     return d.toLocaleDateString("en-CA");
-  };
-
-  // 處理下拉選單值改變
-  const handleStatusChange = (value) => {
-    setStatus(value);
   };
 
   const items = [
@@ -114,7 +108,6 @@ const URequestInfo = () => {
 
   return (
     <>
-      {contextHolder}
       <div
         style={{
           background: "white",

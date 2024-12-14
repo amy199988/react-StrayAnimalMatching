@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   DrawerForm,
   ProForm,
@@ -7,11 +7,83 @@ import {
   ProFormTextArea,
   ProFormUploadButton,
 } from "@ant-design/pro-components";
-import { Table, Space, message } from "antd";
-import { useState } from "react";
+import { Table, Space, message, Form } from "antd";
+import { allCatData } from "../../services/managerService";
+import { updateCat } from "../../services/lovehomeService";
 
 const AllCatlist = () => {
   const [drawerVisit, setDrawerVisit] = useState(false);
+  const [catlistData, setcatlistData] = useState([]);
+  const [fileList, setFileList] = useState([]);
+  const [messageApi, contextHolder] = message.useMessage();
+  const [catImagebase64, setCatImageBase64] = useState(null);
+  const [selectedCat, setSelectedCat] = useState(null);
+  const [form] = Form.useForm();
+
+  const fetchCatList = async () => {
+    try {
+      const apiResponse = await allCatData();
+      const cats = apiResponse.data.map((cat, index) => ({
+        key: cat.catId || `cat-${index}`,
+        catid: cat.catId,
+        catname: cat.catName,
+        breed: cat.breed,
+        age: cat.age,
+        healthstatus: cat.healthStatus,
+        description: cat.description,
+        catImage_Base64: cat.catImage_Base64,
+        isApply: cat.isApply ? "true" : "false",
+        lovehome: cat.lovehomeName,
+      }));
+      setcatlistData(cats);
+    } catch (error) {
+      console.error("Error fetching catlist:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCatList();
+  }, []);
+
+  const UpdateonFinish = async (fieldsValue) => {
+      console.log("表單資料：", fieldsValue);
+      const updateCatId = fieldsValue.catId;
+      if (!updateCatId) {
+        messageApi.error("貓咪 ID 缺失，無法更新！");
+        return false;
+      }
+  
+      const updateCatData = {
+        catId: fieldsValue.catId,
+        catName: fieldsValue.catName,
+        breed: fieldsValue.breed,
+        age: fieldsValue.age,
+        healthStatus: fieldsValue.healthStatus,
+        description: fieldsValue.description,
+        catImage_Base64: catImagebase64 || selectedCat.catImage_Base64,
+        isApply: fieldsValue.isApply === "可申請領養",
+      };
+  
+      console.log("提交的更新 Cat Data：", updateCatData);
+  
+      try {
+        const updateCatResponse = await updateCat(updateCatData, updateCatId);
+        if (updateCatResponse.message === "更新成功") {
+          messageApi.success("更新成功");
+          console.log("更新成功", updateCatData);
+          fetchCatList();
+          return true;
+        } else {
+          messageApi.error("更新失敗");
+          console.error("更新失敗:", updateCatResponse);
+          return false;
+        }
+      } catch (error) {
+        messageApi.error("更新失敗");
+        console.error("更新錯誤:", error);
+        return false;
+      }
+    };
 
   const handleNavigation = (key) => {
     if (key === "catupdate") {
@@ -68,7 +140,7 @@ const AllCatlist = () => {
     },
     {
       title: "所屬中途之家",
-      dataIndex: "lovehome_id",
+      dataIndex: "lovehome",
       filters: [
         {
           text: "流浪動物之家",
@@ -79,7 +151,7 @@ const AllCatlist = () => {
           value: "浪浪友愛",
         },
       ],
-      onFilter: (value, record) => record.lovehome_id.startsWith(value),
+      onFilter: (value, record) => record.lovehome.startsWith(value),
     },
     {
       title: "",
@@ -105,7 +177,7 @@ const AllCatlist = () => {
       description: "111",
       catphotoUrl: "112",
       isApply: "true",
-      lovehome_id: "流浪動物之家"
+      lovehome: "流浪動物之家",
     },
   ];
 

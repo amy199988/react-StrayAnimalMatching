@@ -19,8 +19,11 @@ import LRequestList from "./pages/Lovemom/LRequest_list.jsx";
 import LRequestInfo from "./pages/Lovemom/LRequest_info.jsx";
 import Report from "./pages/Common/Report.jsx";
 import LReportList from "./pages/Lovemom/LReport_list.jsx";
+import LReportInfo from "./pages/Lovemom/LReport_info.jsx";
 import URequestList from "./pages/User/URequest_list.jsx";
 import URequestInfo from "./pages/User/URequest_info.jsx";
+import UReportList from "./pages/User/UReport_list.jsx";
+import UReportInfo from "./pages/User/UReport_info.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { login, logout } from "./services/authService.js";
 
@@ -122,10 +125,13 @@ const App = () => {
               <Route path="/lovehome/request_list" element={<LRequestList />} />
               <Route path="/lovehome/request_list/info" element={<LRequestInfo />} />
               <Route path="/lovehome/report_list" element={<LReportList />} />
+              <Route path="/lovehome/report_list/info" element={<LReportInfo />} />
               <Route path="/user" element={<User />} />
               <Route path="/user/password" element={<UpdatePassword />} />
               <Route path="/user/request_list" element={<URequestList />} />
               <Route path="/user/request_list/info" element={<URequestInfo />} />
+              <Route path="/user/report_list" element={<UReportList />} />
+              <Route path="/user/report_list/info" element={<UReportInfo />} />
               <Route path="/manager" element={<Manager />} />
               <Route path="/manager/all_cat" element={<AllCatlist />} />
               <Route

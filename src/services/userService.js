@@ -66,3 +66,21 @@ export const userRequest = async () => {
 
   return response.json();
 };
+
+/**
+ * 查看通報救援追蹤
+ * @returns {Promise<Object>} 包含結果的 API
+ */
+export const userReport = async () => {
+  const response = await fetch(`${API_BASE_URL}/user/report`, {
+    method: "GET",
+    credentials: "include",
+  })
+
+  if (!response.ok) {
+    const errorDetails = await response.text();
+    throw new Error(`無法取得通報救援: ${errorDetails}`);
+  }
+
+  return response.json();
+};

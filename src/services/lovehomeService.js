@@ -215,3 +215,102 @@ export const deleteRequest = async (requestNumber) => {
     throw error;
   }
 };
+
+/**
+ * 查看通報救援的表單
+ * @returns {Promise<Object>} 包含結果的 API
+ */
+export const lovehomeReport = async () => {
+  const response = await fetch(`${API_BASE_URL}/lovehome/report`, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    const errorDetails = await response.text();
+    throw new Error(`無法取得通報救援清單: ${errorDetails}`);
+  }
+
+  return response.json();
+};
+
+/**
+ * 獲取個別通報救援的表單
+ * @param {number} reportNumber
+ * @returns {Promise<Object>}
+ */
+export const Reports = async (reportNumber) => {
+  const response = await fetch(
+    `${API_BASE_URL}/lovehome/report/${reportNumber}`,
+    {
+      method: "GET",
+      credentials: "include",
+    }
+  );
+
+  if (!response.ok) {
+    const errorDetails = await response.text();
+    throw new Error(`無法取得個別通報救援: ${errorDetails}`);
+  }
+
+  return response.json();
+};
+
+/**
+ * 修改通報救援清單資料
+ * @param {number} reportNumber
+ * @param {Object} updateReportData 更新通報的資料
+ * @returns {Promise<Object>} 包含新增結果的 API
+ */
+export const updateReport = async (updateReportData, reportNumber) => {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/lovehome/report/${reportNumber}`,
+      {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateReportData),
+      }
+    );
+
+    if (!response.ok) {
+      const errorDetails = await response.text();
+      throw new Error(`更新通報清單失敗: ${errorDetails}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("API錯誤:", error);
+    throw error;
+  }
+};
+
+/**
+ * 刪除通報救援清單資料
+ * @param {number} reportNumber
+ * @returns {Promise<Object>} 包含新增結果的 API
+ */
+export const deleteReport = async (reportNumber) => {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/lovehome/report/${reportNumber}`,
+      {
+        method: "DELETE",
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      const errorDetails = await response.text();
+      throw new Error(`刪除通報清單失敗: ${errorDetails}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("API錯誤:", error);
+    throw error;
+  }
+};
