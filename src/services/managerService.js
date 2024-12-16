@@ -24,7 +24,7 @@ export const allUserData = async () => {
  * 查看所有中途資料
  * @returns {Promise<Object>} 包含結果的 API
  */
-export const allLLovehomeData = async () => {
+export const allLovehomeData = async () => {
   const response = await fetch(`${API_BASE_URL}/manager/all_lovehome`, {
     method: "GET",
     credentials: "include",
@@ -36,6 +36,38 @@ export const allLLovehomeData = async () => {
   }
 
   return response.json();
+};
+
+/**
+ * 修改中途資料
+ * @param {number} updateLovehomeId
+ * @param {Object} updateLovehomeData 更新中途的資料
+ * @returns {Promise<Object>} 包含新增結果的 API
+ */
+export const updateLovehome = async (updateLovehomeData, updateLovehomeId) => {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/manager/all_lovehome/${updateLovehomeId}`,
+      {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateLovehomeData),
+      }
+    );
+
+    if (!response.ok) {
+      const errorDetails = await response.text();
+      throw new Error(`更新中途失敗: ${errorDetails}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("API錯誤:", error);
+    throw error;
+  }
 };
 
 /**

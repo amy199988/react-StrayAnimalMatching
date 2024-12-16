@@ -29,7 +29,8 @@ const Lovemom = () => {
           lovehomeAddress: apiResponse.data.lovehomeDto.lovehomeAddress,
           contactInfo: apiResponse.data.lovehomeDto.contactInfo,
           capacity: apiResponse.data.lovehomeDto.capacity,
-          hasPhoto: apiResponse.data.lovehomeDto.lovehome_Url
+          currentOccupancy: apiResponse.data.lovehomeDto.currentOccupancy,
+          hasPhoto: apiResponse.data.lovehomeDto.lovehomeImage_Base64
             ? "目前有照片"
             : "目前無照片",
         });
@@ -147,6 +148,10 @@ const Lovemom = () => {
             </Form.Item>
 
             <Form.Item name="capacity" label="可收容量">
+              <Input />
+            </Form.Item>
+
+            <Form.Item name="currentOccupancy" label="目前佔用率">
               <Input />
             </Form.Item>
 

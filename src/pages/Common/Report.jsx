@@ -21,7 +21,7 @@ const Report = () => {
   const [messageApi, contextHolder] = message.useMessage();
 
   useEffect(() => {
-    const loadUser = async () => {
+    const loadLovehome = async () => {
       try {
         const apiResponse = await userData();
         setreported(apiResponse);
@@ -41,7 +41,7 @@ const Report = () => {
         console.error("Error fetching user:", error);
       }
     };
-    loadUser();
+    loadLovehome();
   }, [form]);
 
   const onFinish = async (fieldsValue) => {

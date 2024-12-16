@@ -24,6 +24,11 @@ import URequestList from "./pages/User/URequest_list.jsx";
 import URequestInfo from "./pages/User/URequest_info.jsx";
 import UReportList from "./pages/User/UReport_list.jsx";
 import UReportInfo from "./pages/User/UReport_info.jsx";
+import AllLovehomelist from "./pages/Manager/AllLovehome.jsx";
+import AllRequestlist from "./pages/Manager/AllRequest.jsx";
+import MRequestInfo from "./pages/Manager/MRequest_info.jsx";
+import AllReportlist from "./pages/Manager/AllReport.jsx";
+import MReportInfo from "./pages/Manager/MReport_info.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { login, logout } from "./services/authService.js";
 
@@ -134,6 +139,11 @@ const App = () => {
               <Route path="/user/report_list/info" element={<UReportInfo />} />
               <Route path="/manager" element={<Manager />} />
               <Route path="/manager/all_cat" element={<AllCatlist />} />
+              <Route path="/manager/all_lovehome" element={<AllLovehomelist />} />
+              <Route path="/manager/all_request" element={<AllRequestlist />} />
+              <Route path="/manager/all_request/info" element={<MRequestInfo />} />
+              <Route path="/manager/all_report" element={<AllReportlist />} />
+              <Route path="/manager/all_report/info" element={<MReportInfo />} />
               <Route
                 path="/auth/login"
                 element={<Login onLogin={handleLogin} />}

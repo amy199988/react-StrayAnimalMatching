@@ -165,6 +165,9 @@ const Catlist = () => {
       );
       setDrawerVisit(true);
     } else if (key === "catadd") {
+      setSelectedCat(null);
+      form.resetFields();
+      setFileList([]);
       setModalVisit(true);
     }
   };
@@ -202,7 +205,7 @@ const Catlist = () => {
       },
     },
     {
-      title: "可領養狀態",
+      title: "領養狀態",
       dataIndex: "isApply",
       filters: [
         {
@@ -215,7 +218,7 @@ const Catlist = () => {
         },
       ],
       onFilter: (value, record) => record.isApply.startsWith(value),
-      width: "10%",
+      width: "9%",
     },
     {
       title: "操作",
@@ -244,187 +247,193 @@ const Catlist = () => {
           <PlusOutlined />
           新增領養貓咪
         </Button>
-        <ModalForm
-          title="領養貓咪 新增"
-          open={modalVisit}
-          width="500px"
-          submitter={{
-            searchConfig: {
-              submitText: "新增",
-              resetText: "取消",
-            },
-          }}
-          onFinish={onFinsih}
-          onOpenChange={setModalVisit}
-        >
-          <ProForm.Group>
-            <ProFormText
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-              name="catName"
-              label="貓咪名稱"
-              placeholder="請輸入名稱"
-            />
-            <ProFormText
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-              name="breed"
-              label="貓咪花紋"
-              placeholder="請輸入花紋"
-            />
-          </ProForm.Group>
-          <ProForm.Group>
-            <ProFormText
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-              name="age"
-              label="貓咪年齡"
-              placeholder="請輸入年齡"
-            />
-            <ProFormText
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-              name="healthStatus"
-              label="特殊狀況"
-              placeholder="請輸入狀況"
-            />
-          </ProForm.Group>
-          <ProFormTextArea
-            colProps={{ span: 24 }}
-            name="description"
-            label="詳細描述"
-            placeholder="請輸入..."
-          />
-          <ProForm.Group>
-            <ProFormRadio.Group
-              label="目前狀態"
-              name="isApply"
-              initialValue="可申請領養"
-              options={["可申請領養", "不可申請領養"]}
-            />
-          </ProForm.Group>
-          <ProFormUploadButton
-            label="貓咪照片上傳"
-            name="catImage_Base64"
-            title="上傳照片"
-            maxCount={1}
-            fieldProps={{
-              beforeUpload: () => false,
-              accept: ".png, .jpg, .jpeg",
-              listType: "picture",
-              onChange: handleImageUpload,
-            }}
-            fileList={fileList}
-            rules={[{ required: true, message: "請上傳照片"}]}
-          />
-        </ModalForm>
-
-        <DrawerForm
-          title="領養貓咪 修改"
-          open={drawerVisit}
-          form={form}
-          width="500px"
-          submitter={{
-            searchConfig: {
-              submitText: "修改",
-              resetText: "取消",
-            },
-          }}
-          onFinish={UpdateonFinish}
-          onOpenChange={(open) => {
-            if (!open) {
-              form.resetFields(); // 關閉時重置表單
-            }
-            setDrawerVisit(open);
-          }}
-        >
-          <ProFormText readonly name="catId" label="貓咪編號" />
-          <ProForm.Group>
-            <ProFormText
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-              name="catName"
-              label="貓咪名稱"
-              placeholder="請輸入名稱"
-            />
-            <ProFormText
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-              name="breed"
-              label="貓咪花紋"
-              placeholder="請輸入花紋"
-            />
-          </ProForm.Group>
-          <ProForm.Group>
-            <ProFormText
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-              name="age"
-              label="貓咪年齡"
-              placeholder="請輸入年齡"
-            />
-            <ProFormText
-              rules={[
-                {
-                  required: true,
-                },
-              ]}
-              name="healthStatus"
-              label="特殊狀況"
-              placeholder="請輸入狀況"
-            />
-          </ProForm.Group>
-          <ProFormTextArea
-            colProps={{ span: 24 }}
-            name="description"
-            label="詳細描述"
-            placeholder="請輸入..."
-          />
-          <ProForm.Group>
-            <ProFormRadio.Group
-              label="目前狀態"
-              name="isApply"
-              initialValue="可申請領養"
-              options={["可申請領養", "不可申請領養"]}
-            />
-          </ProForm.Group>
-          <ProFormUploadButton
-            label="貓咪照片上傳"
-            name="catImage_Base64"
-            title="上傳照片"
-            maxCount={1}
-            fieldProps={{
-              beforeUpload: () => false,
-              accept: ".png, .jpg, .jpeg",
-              listType: "picture",
-              onChange: handleImageUpload,
-            }}
-            fileList={fileList}
-          />
-        </DrawerForm>
         <Table columns={columns} dataSource={catlistData} />
       </Space>
+      <ModalForm
+        title="領養貓咪 新增"
+        open={modalVisit}
+        width="500px"
+        submitter={{
+          searchConfig: {
+            submitText: "新增",
+            resetText: "取消",
+          },
+        }}
+        onFinish={onFinsih}
+        onOpenChange={(open) => {
+          if (!open) {
+            form.resetFields(); // 重置表單
+            setFileList([]); // 清空照片列表
+          }
+          setModalVisit(open);
+        }}
+      >
+        <ProForm.Group>
+          <ProFormText
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+            name="catName"
+            label="貓咪名稱"
+            placeholder="請輸入名稱"
+          />
+          <ProFormText
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+            name="breed"
+            label="貓咪花紋"
+            placeholder="請輸入花紋"
+          />
+        </ProForm.Group>
+        <ProForm.Group>
+          <ProFormText
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+            name="age"
+            label="貓咪年齡"
+            placeholder="請輸入年齡"
+          />
+          <ProFormText
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+            name="healthStatus"
+            label="特殊狀況"
+            placeholder="請輸入狀況"
+          />
+        </ProForm.Group>
+        <ProFormTextArea
+          colProps={{ span: 24 }}
+          name="description"
+          label="詳細描述"
+          placeholder="請輸入..."
+        />
+        <ProForm.Group>
+          <ProFormRadio.Group
+            label="目前狀態"
+            name="isApply"
+            initialValue="可申請領養"
+            options={["可申請領養", "不可申請領養"]}
+          />
+        </ProForm.Group>
+        <ProFormUploadButton
+          label="貓咪照片上傳"
+          name="catImage_Base64"
+          title="上傳照片"
+          maxCount={1}
+          fieldProps={{
+            beforeUpload: () => false,
+            accept: ".png, .jpg, .jpeg",
+            listType: "picture",
+            onChange: handleImageUpload,
+          }}
+          fileList={fileList}
+          rules={[{ required: true, message: "請上傳照片" }]}
+        />
+      </ModalForm>
+
+      <DrawerForm
+        title="領養貓咪 修改"
+        open={drawerVisit}
+        form={form}
+        width="500px"
+        submitter={{
+          searchConfig: {
+            submitText: "修改",
+            resetText: "取消",
+          },
+        }}
+        onFinish={UpdateonFinish}
+        onOpenChange={(open) => {
+          if (!open) {
+            form.resetFields(); // 關閉時重置表單
+          }
+          setDrawerVisit(open);
+        }}
+      >
+        <ProFormText readonly name="catId" label="貓咪編號" />
+        <ProForm.Group>
+          <ProFormText
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+            name="catName"
+            label="貓咪名稱"
+            placeholder="請輸入名稱"
+          />
+          <ProFormText
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+            name="breed"
+            label="貓咪花紋"
+            placeholder="請輸入花紋"
+          />
+        </ProForm.Group>
+        <ProForm.Group>
+          <ProFormText
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+            name="age"
+            label="貓咪年齡"
+            placeholder="請輸入年齡"
+          />
+          <ProFormText
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+            name="healthStatus"
+            label="特殊狀況"
+            placeholder="請輸入狀況"
+          />
+        </ProForm.Group>
+        <ProFormTextArea
+          colProps={{ span: 24 }}
+          name="description"
+          label="詳細描述"
+          placeholder="請輸入..."
+        />
+        <ProForm.Group>
+          <ProFormRadio.Group
+            label="目前狀態"
+            name="isApply"
+            initialValue="可申請領養"
+            options={["可申請領養", "不可申請領養"]}
+          />
+        </ProForm.Group>
+        <ProFormUploadButton
+          label="貓咪照片上傳"
+          name="catImage_Base64"
+          title="上傳照片"
+          maxCount={1}
+          fieldProps={{
+            beforeUpload: () => false,
+            accept: ".png, .jpg, .jpeg",
+            listType: "picture",
+            onChange: handleImageUpload,
+          }}
+          fileList={fileList}
+        />
+      </DrawerForm>
     </>
   );
 };

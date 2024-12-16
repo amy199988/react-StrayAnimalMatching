@@ -3,7 +3,7 @@ import { Descriptions, Button, Space, Select, message } from "antd";
 import { useSearchParams } from "react-router-dom";
 import { Reports, updateReport } from "../../services/lovehomeService";
 
-const LReportInfo = () => {
+const MReportInfo = () => {
   const [status, setStatus] = useState("");
   const [reportData, setreportData] = useState(null);
   const [searchParams] = useSearchParams();
@@ -56,7 +56,7 @@ const LReportInfo = () => {
         messageApi.success("修改成功");
         console.log("修改成功", updateReportResponse);
         setTimeout(() => {
-          window.location.href = "/lovehome/report_list";
+          window.location.href = "/manager/all_report";
         }, 1000);
       } else {
         messageApi.error("修改失敗");
@@ -186,7 +186,7 @@ const LReportInfo = () => {
         >
           <Space wrap>
             <Button
-              onClick={() => (window.location.href = "/lovehome/report_list")}
+              onClick={() => (window.location.href = "/manager/all_report")}
             >
               取消
             </Button>
@@ -199,4 +199,4 @@ const LReportInfo = () => {
     </>
   );
 };
-export default LReportInfo;
+export default MReportInfo;

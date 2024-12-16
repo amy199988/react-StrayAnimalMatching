@@ -98,7 +98,7 @@ const UReportInfo = () => {
     },
     {
       key: "reportStatus",
-      label: "申請狀況",
+      label: "通報狀況",
       span: 2,
       children: reportData ? statusMap[status] : "加載中...",
     },
@@ -115,7 +115,7 @@ const UReportInfo = () => {
         }}
       >
         <Descriptions
-          title="申請領養表單"
+          title="通報救援表單"
           layout="vertical"
           bordered
           items={items}

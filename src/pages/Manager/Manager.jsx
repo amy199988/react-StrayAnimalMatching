@@ -11,8 +11,9 @@ const Manager = () => {
     } else if (key === "all_lovehome") {
       navigate("/manager/all_lovehome");
     } else if (key === "all_request") {
-      navigate("/manager/all_lovehome");
+      navigate("/manager/all_request");
     } else if (key === "all_report") {
+      navigate("/manager/all_report");
     }
   };
 

@@ -3,7 +3,7 @@ import { Descriptions, Button, Space, Select, message } from "antd";
 import { useSearchParams } from "react-router-dom";
 import { Requests, updateRequest } from "../../services/lovehomeService";
 
-const LRequestInfo = () => {
+const MRequestInfo = () => {
   // 狀態管理，用來保存 "申請狀況" 的選擇值
   const [status, setStatus] = useState("");
   const [requestData, setrequestData] = useState(null);
@@ -51,7 +51,7 @@ const LRequestInfo = () => {
         messageApi.success("修改成功");
         console.log("修改成功", updateRequestData);
         setTimeout(() => {
-          window.location.href = "/lovehome/request_list";
+          window.location.href = "/manager/all_request";
         }, 1000);
       } else {
         messageApi.error("修改失敗");
@@ -139,9 +139,13 @@ const LRequestInfo = () => {
       children: requestData ? formatDate(requestData.requstDate) : "加載中...",
     },
     {
+      key: "lovehome",
+      label: "所屬中途之家",
+      children: requestData ? requestData.catDto.lovehomeName : "加載中...",
+    },
+    {
       key: "requestStatus",
       label: "申請狀況",
-      span: 2,
       children: (
         <Select
           value={status}
@@ -181,7 +185,7 @@ const LRequestInfo = () => {
         >
           <Space wrap>
             <Button
-              onClick={() => (window.location.href = "/lovehome/request_list")}
+              onClick={() => (window.location.href = "/manager/all_request")}
             >
               取消
             </Button>
@@ -194,4 +198,4 @@ const LRequestInfo = () => {
     </>
   );
 };
-export default LRequestInfo;
+export default MRequestInfo;
