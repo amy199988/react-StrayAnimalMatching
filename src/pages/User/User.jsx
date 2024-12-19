@@ -3,11 +3,13 @@ import { Button, Space, Form, Input, DatePicker, Radio, Row, Col } from "antd";
 import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import { userData } from "../../services/userService";
+import BindLineButton from "../Util/BindLineButton";
 
 const User = () => {
   const navigate = useNavigate();
   const [componentDisabled] = useState(true);
   const [form] = Form.useForm();
+  const [userId,setUserId] = useState(null);
 
   useEffect(() => {
     const loadData = async () => {
@@ -24,6 +26,8 @@ const User = () => {
           email: apiResponse.data.email,
           role: apiResponse.data.role,
         });
+        
+        setUserId(apiResponse.data.userId);
         console.log(apiResponse);
       } catch (error) {
         console.error("Error fetching lovemom:", error);
@@ -58,6 +62,7 @@ const User = () => {
         <Button onClick={() => handleNavigation("Ureport_list")}>
           通報救援清單
         </Button>
+        {userId && <BindLineButton userId={userId} />}
       </Space>
       <Row
         gutter={16}

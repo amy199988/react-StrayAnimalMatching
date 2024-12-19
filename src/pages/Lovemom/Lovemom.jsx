@@ -3,11 +3,13 @@ import { Button, Space, Form, Input, DatePicker, Radio, Row, Col } from "antd";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { lovemomData } from "../../services/lovehomeService";
+import BindLineButton from "../Util/BindLineButton";
 
 const Lovemom = () => {
   const navigate = useNavigate();
   const [componentDisabled] = useState(true);
   const [form] = Form.useForm();
+  const [userId,setUserId] = useState(null);
 
   useEffect(() => {
     const loadData = async () => {
@@ -34,6 +36,8 @@ const Lovemom = () => {
             ? "目前有照片"
             : "目前無照片",
         });
+
+        setUserId(apiResponse.data.userId);
       } catch (error) {
         console.error("Error fetching lovemom:", error);
       }
@@ -73,6 +77,7 @@ const Lovemom = () => {
         <Button onClick={() => handleNavigation("reportlist")}>
           通報救援清單管理
         </Button>
+        {userId && <BindLineButton userId={userId} />}
       </Space>
       <Row
         gutter={16}

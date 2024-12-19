@@ -29,6 +29,7 @@ import AllRequestlist from "./pages/Manager/AllRequest.jsx";
 import MRequestInfo from "./pages/Manager/MRequest_info.jsx";
 import AllReportlist from "./pages/Manager/AllReport.jsx";
 import MReportInfo from "./pages/Manager/MReport_info.jsx";
+import LineLogin from "./pages/Util/LineLogin.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { login, logout } from "./services/authService.js";
 
@@ -150,6 +151,7 @@ const App = () => {
               />
               <Route path="/auth/sign_up" element={<SignUp />} />
               <Route path="/donation" element={<Donation />} />
+              <Route path="/callback" element={<LineLogin />} />
             </Routes>
           </Content>
           <Footer
