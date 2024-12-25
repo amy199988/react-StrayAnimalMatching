@@ -9,7 +9,7 @@ const Lovemom = () => {
   const navigate = useNavigate();
   const [componentDisabled] = useState(true);
   const [form] = Form.useForm();
-  const [userId,setUserId] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     const loadData = async () => {
@@ -24,6 +24,9 @@ const Lovemom = () => {
             ? moment(apiResponse.data.birthdate)
             : null,
           email: apiResponse.data.email,
+          active:apiResponse.data.active,
+          hasLine: apiResponse.data.lineid ?
+            "link" : "notLink",
           role: apiResponse.data.role,
           lovehomeName: apiResponse.data.lovehomeDto.lovehomeName,
           lovehomeCity: apiResponse.data.lovehomeDto.lovehomeCity,
@@ -38,6 +41,7 @@ const Lovemom = () => {
         });
 
         setUserId(apiResponse.data.userId);
+        console.log(apiResponse);
       } catch (error) {
         console.error("Error fetching lovemom:", error);
       }
@@ -52,6 +56,12 @@ const Lovemom = () => {
       navigate("/lovehome/request_list");
     } else if (key === "reportlist") {
       navigate("/lovehome/report_list");
+    } else if (key === "user_update") {
+      navigate("/lovehome/user_update");
+    } else if (key === "password_update") {
+      navigate("/lovehome/password");
+    } else if (key === "lovehome_update") {
+      navigate("/lovehome/update");
     }
   };
 
@@ -65,9 +75,9 @@ const Lovemom = () => {
       }}
     >
       <Space wrap style={{ marginBottom: "48px" }}>
-        <Button>修改會員資料</Button>
-        <Button href="/lovemom/password">修改密碼</Button>
-        <Button>修改中途資料</Button>
+        <Button onClick={() => handleNavigation("user_update")}>修改會員資料</Button>
+        <Button onClick={() => handleNavigation("password_update")}>修改密碼</Button>
+        <Button onClick={() => handleNavigation("lovehome_update")}>修改中途資料</Button>
         <Button onClick={() => handleNavigation("catlist")}>
           貓咪清單管理
         </Button>
@@ -112,6 +122,20 @@ const Lovemom = () => {
 
             <Form.Item name="email" label="信箱">
               <Input />
+            </Form.Item>
+
+            <Form.Item name="active" label="帳號狀態">
+              <Radio.Group>
+                <Radio value={true} >已驗證</Radio>
+                <Radio value={false} >未驗證</Radio>
+              </Radio.Group>
+            </Form.Item>
+
+            <Form.Item name="hasLine" label="LINE">
+              <Radio.Group>
+                <Radio value="link">已綁定</Radio>
+                <Radio value="notLink">未綁定</Radio>
+              </Radio.Group>
             </Form.Item>
 
             <Form.Item name="role" label="申請會員">

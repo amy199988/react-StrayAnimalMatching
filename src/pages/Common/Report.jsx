@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   ProForm,
   ProFormUploadButton,
@@ -6,9 +6,10 @@ import {
   ProFormSelect,
   ProFormText,
 } from "@ant-design/pro-components";
-import { Form, message } from "antd";
+import { Form, message, Modal } from "antd";
 import { userData } from "../../services/userService";
 import { report, lovehome_list } from "../../services/commonService";
+import { checkSession } from "../../services/authService";
 
 const Report = () => {
   const [fileList, setFileList] = useState([]);
@@ -19,8 +20,41 @@ const Report = () => {
   const [selectedLovehomeAddress, setSelectedLovehomeAddress] = useState("");
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
+  const alertTriggeredRef = useRef(false); // 用於追蹤 alert 是否已被觸發
 
   useEffect(() => {
+    const verifyLoginStatus = async () => {
+      // 檢查是否已登入
+      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+      let isSessionValid = false;
+
+      try {
+        // 檢查後端 Session 狀態
+        isSessionValid = await checkSession();
+      } catch (error) {
+        console.error("Session 檢查失敗:", error.message);
+      }
+
+      // 當用戶未登入或 session 無效且 Modal 未觸發過時，才觸發 Modal
+      if ((!isLoggedIn || !isSessionValid) && !alertTriggeredRef.current) {
+        alertTriggeredRef.current = true; // 設置為 true，避免重複執行
+        localStorage.setItem("isLoggedIn", "false");
+        setTimeout(() => {
+          Modal.info({
+            title: "請先登入後繼續。",
+            okText: "前往登入", // 設定按鈕的文字
+            onOk: () => {
+              window.location.href = "/auth/login"; // 跳轉到登入頁面
+            },
+          });
+        }, 1000);
+      }
+    };
+
+    // 只會在組件第一次渲染時觸發
+    verifyLoginStatus();
+
+
     const loadLovehome = async () => {
       try {
         const apiResponse = await userData();
@@ -63,7 +97,7 @@ const Report = () => {
 
     try {
       const response = await report(reportData, selectedLovehomeId);
-      if (response.message === "通報成功") {
+      if (response.message === "通報成功","申請成功") {
         messageApi.success("通報成功！");
         console.log("通報成功", reportData);
         setTimeout(() => {

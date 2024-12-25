@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Form, Input, Space, message } from "antd";
-import { Update_password as UpdatePasswordAPI } from "../../services/userService"; // 假設 API 函式存放在 api.js
+import { UpdatePassword as UpdatePasswordAPI } from "../../services/lovehomeService"; // 假設 API 函式存放在 api.js
 
 const SubmitButton = ({ form, children }) => {
   const [submittable, setSubmittable] = React.useState(false);
@@ -33,7 +33,7 @@ const UpdatePassword = () => {
       const apiResponse = await UpdatePasswordAPI(oldPassword, newPassword);
       message.success("密碼修改成功");
       setTimeout(() => {
-        window.location.href = "/lovemom";
+        window.location.href = "/lovehome";
       }, 1000);
       console.log(apiResponse); // 可以處理回應資料
     } catch (error) {

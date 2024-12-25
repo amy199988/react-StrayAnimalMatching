@@ -9,7 +9,7 @@ const User = () => {
   const navigate = useNavigate();
   const [componentDisabled] = useState(true);
   const [form] = Form.useForm();
-  const [userId,setUserId] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     const loadData = async () => {
@@ -24,9 +24,12 @@ const User = () => {
             ? moment(apiResponse.data.birthdate)
             : null,
           email: apiResponse.data.email,
+          active: apiResponse.data.active,
+          hasLine: apiResponse.data.lineid ?
+            "link" : "notLink",
           role: apiResponse.data.role,
         });
-        
+
         setUserId(apiResponse.data.userId);
         console.log(apiResponse);
       } catch (error) {
@@ -41,6 +44,10 @@ const User = () => {
       navigate("/user/request_list");
     } else if (key === "Ureport_list") {
       navigate("/user/report_list");
+    } else if (key === "User_update") {
+      navigate("/user/update");
+    } else if (key === "Password_update") {
+      navigate("/user/password");
     }
   };
 
@@ -54,8 +61,8 @@ const User = () => {
       }}
     >
       <Space wrap style={{ marginBottom: "48px" }}>
-        <Button>修改會員資料</Button>
-        <Button href="/user/password">修改密碼</Button>
+        <Button onClick={() => handleNavigation("User_update")}>修改會員資料</Button>
+        <Button onClick={() => handleNavigation("Password_update")}>修改密碼</Button>
         <Button onClick={() => handleNavigation("Urequest_list")}>
           申請領養清單
         </Button>
@@ -68,10 +75,10 @@ const User = () => {
         gutter={16}
         style={{ width: "100%", maxWidth: "1200px", justifyContent: "center" }}
       >
-        <Col span={10}>
+        <Col span={12}>
           <Form
             form={form}
-            labelCol={{ span: 4 }}
+            labelCol={{ span: 6 }}
             wrapperCol={{ span: 14 }}
             layout="horizontal"
             disabled={componentDisabled}
@@ -97,6 +104,19 @@ const User = () => {
 
             <Form.Item name="email" label="信箱">
               <Input />
+            </Form.Item>
+
+            <Form.Item name="active" label="帳號狀態">
+              <Radio.Group>
+                <Radio value={true} >已驗證</Radio>
+                <Radio value={false} >未驗證</Radio>
+              </Radio.Group>
+            </Form.Item>
+            <Form.Item name="hasLine" label="LINE">
+              <Radio.Group>
+                <Radio value="link">已綁定</Radio>
+                <Radio value="notLink">未綁定</Radio>
+              </Radio.Group>
             </Form.Item>
 
             <Form.Item name="role" label="申請會員">

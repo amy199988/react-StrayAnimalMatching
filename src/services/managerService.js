@@ -6,7 +6,7 @@ const API_BASE_URL = "http://localhost:8081";
  * @returns {Promise<Object>} 包含結果的 API
  */
 export const allUserData = async () => {
-  const response = await fetch(`${API_BASE_URL}/manager`, {
+  const response = await fetch(`${API_BASE_URL}/manager/all_user`, {
     method: "GET",
     credentials: "include",
   })
@@ -18,6 +18,39 @@ export const allUserData = async () => {
 
   return response.json();
 };
+
+/**
+ * 修改會員資料
+ * @param {number} updateUserId
+ * @param {Object} updateUserData 更新中途的資料
+ * @returns {Promise<Object>} 包含新增結果的 API
+ */
+export const updateUser = async (updateUserData, updateUserId) => {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/manager/all_lovehome/${updateUserId}`,
+      {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateUserData),
+      }
+    );
+
+    if (!response.ok) {
+      const errorDetails = await response.text();
+      throw new Error(`更新中途失敗: ${errorDetails}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("API錯誤:", error);
+    throw error;
+  }
+};
+
 
 /**
  * 查看所有中途資料

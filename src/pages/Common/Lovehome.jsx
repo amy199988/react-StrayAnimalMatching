@@ -26,8 +26,36 @@ const Lovehome = () => {
         lovehomes.map((lovehome) => (
           <Col span={6} key={lovehome.lovehomeId}>
             <Card
-              style={{ width: 250 }}
-              cover={<img alt={lovehome.lovehomeId} src={lovehome.lovehomeImage_Base64} />}
+              style={{ 
+                width: 300,
+                height: 400,
+                overflow: "hidden",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-evenly",
+                }}
+              cover={
+                <div
+                  style={{
+                    width: "100%",
+                    height: "200px",
+                    background: "#f0f0f0", // 預設背景色
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                <img
+                  alt={lovehome.lovehomeId}
+                  src={lovehome.lovehomeImage_Base64}
+                  style={{
+                    width: "100%",
+                    height: "200px",
+                    objectFit: "cover", // 圖片自動調整以適應區域
+                  }}
+                />
+                </div>
+              }
             >
               <Meta
                 title={lovehome.lovehomeName}

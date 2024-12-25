@@ -83,3 +83,24 @@ export const userReport = async () => {
 
   return response.json();
 };
+
+/**
+ * 修改會員資料
+ * @param {Object} updateUserDate 更新會員資料
+ * @returns {Promise<Object>} 包含修改結果的 API 回應
+ */
+export const updateUser = async (updateUserDate) => {
+    const response = await fetch(`${API_BASE_URL}/user/update`, {
+      method: "PUT",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updateUserDate),
+    });
+    if (!response.ok) {
+      const errorDetails = await response.text();
+      throw new Error(`"更新資料失敗: ${errorDetails}`);
+    }
+    return response.json();
+};

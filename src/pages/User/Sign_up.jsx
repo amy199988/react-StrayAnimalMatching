@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Form, Input, DatePicker, Radio, Upload, message } from "antd";
+import { Button, Form, Input, DatePicker, Radio, Upload, message, Modal } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { sign_up } from "../../services/authService";
 const formItemLayout = {
@@ -50,18 +50,20 @@ const SignUp = () => {
       birthdate: fieldsValue.birthdate.format("YYYY-MM-DD"),
       email: fieldsValue.email,
       active: 0,
+      LINEId: null,
+      resetToken: null,
       role: fieldsValue.role,
       lovehomeDto:
         fieldsValue.role === "role_lovemom"
           ? {
-              lovehomeName: fieldsValue.lovehomeName,
-              lovehomeCity: fieldsValue.lovehomeCity,
-              lovehomeDistrict: fieldsValue.lovehomeDistrict,
-              lovehomeAddress: fieldsValue.lovehomeAddress,
-              contactInfo: fieldsValue.contactInfo,
-              capacity: fieldsValue.capacity,
-              lovehomeImage_Base64: lovehomeImageBase64,
-            }
+            lovehomeName: fieldsValue.lovehomeName,
+            lovehomeCity: fieldsValue.lovehomeCity,
+            lovehomeDistrict: fieldsValue.lovehomeDistrict,
+            lovehomeAddress: fieldsValue.lovehomeAddress,
+            contactInfo: fieldsValue.contactInfo,
+            capacity: fieldsValue.capacity,
+            lovehomeImage_Base64: lovehomeImageBase64,
+          }
           : null,
     };
 
@@ -71,14 +73,19 @@ const SignUp = () => {
       const signup = await sign_up(userData);
       if (signup.message === "註冊成功") {
         console.log("註冊成功", userData);
-        messageApi.success("註冊成功");
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 1000);
+        Modal.info({
+          title: "註冊成功！請至E-mail確認信件後才可登入。",
+          okText: "確定", // 設定按鈕的文字
+          onOk: () => {
+            window.location.href = "/";
+          },
+        });
       }
     } catch (error) {
       if (error.message.includes("已存在")) {
         messageApi.error("帳號已存在，請重新輸入註冊。");
+      } else if (error.message.includes("Email已被使用")) {
+        messageApi.error("Email已被使用，請重新輸入註冊。")
       } else {
         messageApi.error("註冊失敗，請重新輸入註冊。");
       }
@@ -193,6 +200,10 @@ const SignUp = () => {
             {
               required: true,
               message: "請輸入電話",
+            },
+            {
+              len: 10,
+              message: "電話號碼必須是 10 位數字",
             },
           ]}
         >

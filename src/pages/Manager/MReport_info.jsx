@@ -52,7 +52,7 @@ const MReportInfo = () => {
         updateReportData,
         report_number
       );
-      if (updateReportResponse.message === "修改成功") {
+      if (updateReportResponse.message === "修改成功","更新成功") {
         messageApi.success("修改成功");
         console.log("修改成功", updateReportResponse);
         setTimeout(() => {

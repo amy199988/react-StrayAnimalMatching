@@ -20,6 +20,81 @@ export const lovemomData = async () => {
 };
 
 /**
+ * 修改會員資料(愛媽)
+ * @param {Object} updateUserDate 更新會員資料
+ * @returns {Promise<Object>} 包含修改結果的 API 回應
+ */
+export const updateUser = async (updateUserDate) => {
+  const response = await fetch(`${API_BASE_URL}/lovehome/user_update`, {
+    method: "PUT",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updateUserDate),
+  });
+  if (!response.ok) {
+    const errorDetails = await response.text();
+    throw new Error(`"更新資料失敗: ${errorDetails}`);
+  }
+  return response.json();
+};
+
+
+/**
+ * 修改中途資料
+ * @param {Object} updateLovehomeDate 更新中途資料
+ * @returns {Promise<Object>} 包含修改結果的 API 回應
+ */
+export const updatelovehome = async (updateLovehomeDate) => {
+  const response = await fetch(`${API_BASE_URL}/lovehome/update`, {
+    method: "PUT",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updateLovehomeDate),
+  });
+  if (!response.ok) {
+    const errorDetails = await response.text();
+    throw new Error(`"更新資料失敗: ${errorDetails}`);
+  }
+  return response.json();
+};
+
+
+/**
+ * 修改密碼(愛媽)
+ * @param {string} oldPassword 舊密碼
+ * @param {string} newPassword 新密碼
+ * @returns {Promise<Object>} 包含修改結果的 API 回應
+ */
+export const UpdatePassword = async (oldPassword, newPassword) => {
+  // 將資料轉換成表單格式
+  const formData = new URLSearchParams();
+  formData.append("oldPassword", oldPassword);
+  formData.append("newPassword", newPassword);
+
+  const response = await fetch(`${API_BASE_URL}/lovehome/password`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    credentials: "include",
+    body: formData.toString(), // 傳送表單格式的資料
+  });
+
+  if (!response.ok) {
+    const errorDetails = await response.text();
+    throw new Error(`"修改失敗: ${errorDetails}`);
+  }
+
+  return response.json();
+};
+
+
+
+/**
  * 查看中途擁有貓咪資料
  * @returns {Promise<Object>} 包含結果的 API
  */

@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Row, Col } from "antd";
+import { Button, Card, Row, Col, message , Modal } from "antd";
 import { useNavigate } from "react-router-dom";
 import { adoptioncat_list } from "../../services/commonService";
+import { checkSession } from "../../services/authService";
 
 const { Meta } = Card;
 
 const Adoption = () => {
   const navigate = useNavigate();
-  const [adoptionCats, setadoptionCats] = useState([]);
+  const [adoptionCats, setAdoptionCats] = useState([]);
 
   useEffect(() => {
     const loadCats = async () => {
       try {
         const apiResponse = await adoptioncat_list();
-        setadoptionCats(apiResponse.data);
+        setAdoptionCats(apiResponse.data);
       } catch (error) {
         console.error("Error fetching catlists", error);
       }
@@ -22,7 +23,49 @@ const Adoption = () => {
     loadCats();
   }, []);
 
-  const handleAdopt = (catId) => {
+    // 檢查登入狀態及 Session 狀態
+    const checkLoginAndSession = async () => {
+      const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+      
+      if (!isLoggedIn) {
+          Modal.info({
+            title: "請先登入後繼續。",
+            okText: "前往登入", // 設定按鈕的文字
+            onOk: () => {
+              window.location.href = "/auth/login"; // 跳轉到登入頁面
+            },
+          });
+        return false; // 沒有登入
+      }
+  
+      // 檢查 Session 狀態
+      try {
+        const isSessionValid = await checkSession();
+        if (!isSessionValid) {
+          message.error("Session 已過期，請重新登入");
+          localStorage.setItem("isLoggedIn", "false"); // 清除本地登入狀態
+          setTimeout(() => {
+            navigate("/auth/login"); // 跳轉到登入頁面
+          }, 1000);
+          return false; // Session 無效
+        }
+  
+        return true; // 登入且 Session 有效
+      } catch (error) {
+        console.error("Session 檢查失敗:", error);
+        message.error("無法確認 Session 狀態，請稍後再試");
+        return false; // 無法檢查 Session
+      }
+    };
+
+    const handleAdopt = async (catId) => {
+      // 檢查登入和 Session 狀態
+      const isValid = await checkLoginAndSession();
+      if (!isValid) {
+        return; // 如果檢查失敗，直接返回
+      }
+
+    // 已登入，執行領養動作
     navigate(`/common/adoption_request?catId=${catId}`);
   };
 
@@ -30,7 +73,7 @@ const Adoption = () => {
     <Row gutter={16}>
       {adoptionCats && adoptionCats.length > 0 ? (
         adoptionCats.map((cat) => (
-          <Col span={6} key={cat.catId}>
+          <Col span={5} key={cat.catId}>
             <Card
               style={{ width: 250 }}
               cover={<img alt={cat.catId} src={cat.catImage_Base64} />}

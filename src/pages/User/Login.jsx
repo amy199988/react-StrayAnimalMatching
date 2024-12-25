@@ -73,7 +73,7 @@ const Login = ({onLogin}) => {
               marginBlockEnd: 24,
             }}
           >
-            <a
+            <a href="/auth/forget_password"
               style={{
                 float: "right",
                 marginBottom: "12px",

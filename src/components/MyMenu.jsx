@@ -1,5 +1,5 @@
-import React from "react";
-import { Menu } from "antd";
+import React, { useState, useEffect } from "react";
+import { Menu,message } from "antd";
 import { useNavigate } from "react-router-dom";
 import {
   CatIcon,
@@ -10,8 +10,22 @@ import {
   LoginIcon,
 } from "./icons/IndexIcon";
 
-const MyMenu = ({ role, onLogout }) => {
+const MyMenu = () => {
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [role, setRole] = useState("");
+
+  // 讀取登入狀態和用戶資料
+  useEffect(() => {
+    const userDtoString = localStorage.getItem("userDto");
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+    if (isLoggedIn && userDtoString) {
+      const userDto = JSON.parse(userDtoString);
+      setIsLoggedIn(true);
+      setRole(userDto.role); // 設置用戶角色
+    }
+  }, []);
 
   const items = [
     {
@@ -28,11 +42,6 @@ const MyMenu = ({ role, onLogout }) => {
       label: "合作中途之家",
       key: "lovehome",
       icon: <HomeIcon style={{ fontSize: "24px" }} />,
-    },
-    {
-      label: "捐獻物資",
-      key: "donation",
-      icon: <DonationIcon style={{ fontSize: "24px" }} />,
     },
     ...(role === "role_user"
       ? [
@@ -61,14 +70,10 @@ const MyMenu = ({ role, onLogout }) => {
           },
         ]
       : []),
+    // 根據登入狀態顯示登入或登出按鈕
     {
-      label: "登入會員",
-      key: "login",
-      icon: <LoginIcon style={{ fontSize: "24px" }} />,
-    },
-    {
-      label: "登出會員",
-      key: "logout",
+      label: isLoggedIn ? "登出會員" : "登入會員",
+      key: isLoggedIn ? "logout" : "login",
       icon: <LoginIcon style={{ fontSize: "24px" }} />,
     },
     {
@@ -95,10 +100,22 @@ const MyMenu = ({ role, onLogout }) => {
     } else if (e.key === "login") {
       navigate("/auth/login");
     } else if (e.key === "logout") {
-      onLogout();
-    } else if (e.key === "donation") {
-      navigate("/donation");
+      handleLogout();
     }
+  };
+
+  const handleLogout = () => {
+    // 清除 localStorage 和狀態
+    localStorage.removeItem("userDto");
+    localStorage.removeItem("isLoggedIn");
+    setIsLoggedIn(false); // 設置為未登入狀態
+
+    // 登出後導向首頁
+  
+    message.success("登出成功");
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1000);
   };
 
   return (

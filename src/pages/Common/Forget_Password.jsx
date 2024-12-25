@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, Input, Space, message } from "antd";
-import { Update_password as UpdatePasswordAPI } from "../../services/userService"; // 假設 API 函式存放在 api.js
+import { forgetPassword } from "../../services/authService"; // 假設 API 函式存放在 api.js
 
 const SubmitButton = ({ form, children }) => {
   const [submittable, setSubmittable] = useState(false);
@@ -21,24 +21,24 @@ const SubmitButton = ({ form, children }) => {
   );
 };
 
-const UpdatePassword = () => {
+const ForgetPassword = () => {
   const [form] = Form.useForm();
 
   // 提交表單的處理函式
   const handleFinish = async (values) => {
-    const { oldPassword, newPassword } = values;
+    const { account, email } = values;
 
     try {
       // 調用 API 函式
-      const apiResponse = await UpdatePasswordAPI(oldPassword, newPassword);
-      message.success("密碼修改成功");
+      const apiResponse = await forgetPassword(account, email);
+      message.success("寄送郵件成功，請至Email收信");
       setTimeout(() => {
-        window.location.href = "/user";
+        window.location.href = "/";
       }, 1000);
       console.log(apiResponse); // 可以處理回應資料
     } catch (error) {
-      console.error("密碼修改失敗:", error);
-      message.error("密碼修改失敗，請確認輸入是否正確");
+      console.error("申請失敗:", error);
+      message.error("忘記密碼申請失敗，請確認資料輸入是否正確");
     }
   };
 
@@ -52,63 +52,40 @@ const UpdatePassword = () => {
     >
       <Form
         form={form}
-        name="updatePassword"
+        name="forgetPassword"
         layout="vertical"
         autoComplete="off"
         onFinish={handleFinish} // 表單提交時執行 handleFinish
       >
         <Form.Item
-          name="oldPassword"
-          label="原密碼"
+          name="account"
+          label="帳號"
           rules={[
             {
               required: true,
-              message: "請輸入原密碼！",
+              message: "請輸入帳號！",
             },
           ]}
         >
-          <Input.Password />
+          <Input />
         </Form.Item>
         <Form.Item
-          name="newPassword"
-          label="新密碼"
+          name="email"
+          label="信箱"
           rules={[
             {
               required: true,
-              message: "請輸入新密碼！",
+              message: "請輸入信箱！",
             },
           ]}
-          hasFeedback
         >
-          <Input.Password />
+          <Input />
         </Form.Item>
 
-        <Form.Item
-          name="confirm"
-          label="確認新密碼"
-          dependencies={["newPassword"]}
-          hasFeedback
-          rules={[
-            {
-              required: true,
-              message: "再次確認新密碼",
-            },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue("newPassword") === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error("密碼輸入不相同"));
-              },
-            }),
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
 
         <Form.Item>
           <Space>
-            <SubmitButton form={form}>送出更改</SubmitButton>
+            <SubmitButton form={form}>送出</SubmitButton>
             <Button htmlType="reset" onClick={() => form.resetFields()}>
               重設
             </Button>
@@ -119,4 +96,4 @@ const UpdatePassword = () => {
   );
 };
 
-export default UpdatePassword;
+export default ForgetPassword;
