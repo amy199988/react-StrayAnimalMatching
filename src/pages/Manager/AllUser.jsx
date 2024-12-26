@@ -6,7 +6,7 @@ import {
   ProFormTextArea,
   ProFormUploadButton,
 } from "@ant-design/pro-components";
-import { Table, Space, message, Form } from "antd";
+import { Table, Space, message, Form , Button } from "antd";
 import moment from "moment";
 import { allUserData } from "../../services/managerService";
 import { updateUser } from "../../services/managerService";
@@ -20,6 +20,10 @@ const AllUserlist = () => {
   const [lovehomeImagebase64, setLovehomeImageBase64] = useState(null);
   const [form] = Form.useForm();
   //  const [RoleFilters, setRoleFilters] = useState([]);
+
+  const handleGoBack = () => {
+    window.history.back(); // 或者 window.history.go(-1);
+  };
 
   // 處理下拉選單值改變
   const handleStatusChange = (value) => {
@@ -101,18 +105,18 @@ const AllUserlist = () => {
       role: fieldsValue.role,
       LINEId: fieldsValue.LINEId,
       lovehomeDto: fieldsValue.lovehomeDto,
-        // fieldsValue.role === "role_lovemom"
-        //   ? {
-        //     lovehomeId: fieldsValue.lovehomeId,
-        //     lovehomeName: fieldsValue.lovehomeName,
-        //     lovehomeCity: fieldsValue.lovehomeCity,
-        //     lovehomeDistrict: fieldsValue.lovehomeDistrict,
-        //     lovehomeAddress: fieldsValue.lovehomeAddress,
-        //     contactInfo: fieldsValue.contactInfo,
-        //     capacity: fieldsValue.capacity,
-        //     lovehomeImage_Base64: fieldsValue.lovehomeImageBase64,
-        //   }
-       //  : null,
+      // fieldsValue.role === "role_lovemom"
+      //   ? {
+      //     lovehomeId: fieldsValue.lovehomeId,
+      //     lovehomeName: fieldsValue.lovehomeName,
+      //     lovehomeCity: fieldsValue.lovehomeCity,
+      //     lovehomeDistrict: fieldsValue.lovehomeDistrict,
+      //     lovehomeAddress: fieldsValue.lovehomeAddress,
+      //     contactInfo: fieldsValue.contactInfo,
+      //     capacity: fieldsValue.capacity,
+      //     lovehomeImage_Base64: fieldsValue.lovehomeImageBase64,
+      //   }
+      //  : null,
     };
 
     console.log("提交的更新 User Date：", updateUserData);
@@ -293,6 +297,18 @@ const AllUserlist = () => {
 
   return (
     <>
+      {/* 返回上一頁按鈕 */}
+      <Button
+        onClick={handleGoBack}
+        style={{
+          position: "absolute", // 使用絕對定位
+          top: "70px", // 距離頂部20px
+          left: "50px", // 距離左邊20px
+          zIndex: 10, // 確保按鈕顯示在頁面最前面
+        }}
+      >
+        返回上一頁
+      </Button>
       {contextHolder}
       <Space
         direction="vertical"
@@ -379,12 +395,12 @@ const AllUserlist = () => {
             ]}
             name="active"
             label="帳號狀態"
-                onChange={handleStatusChange}
-                options={[
-                  { value: "true", label: "已驗證" },
-                  { value: "false", label: "未驗證" },
-                ]}
-              />
+            onChange={handleStatusChange}
+            options={[
+              { value: "true", label: "已驗證" },
+              { value: "false", label: "未驗證" },
+            ]}
+          />
 
 
 

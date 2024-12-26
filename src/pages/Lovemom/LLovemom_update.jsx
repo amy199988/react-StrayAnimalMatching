@@ -10,6 +10,9 @@ const LUser_update = () => {
   const [LovemomImagebase64, setLovemomImageBase64] = useState(null);
   const [selectedLovemom, setSelectedLovemom] = useState(null);
 
+  const handleGoBack = () => {
+    window.history.back(); // 或者 window.history.go(-1);
+  };
 
   const onFinish = async (fieldsValue) => {
     console.log("表單資料：", fieldsValue);
@@ -49,7 +52,7 @@ const LUser_update = () => {
     }
 
     // 如果文件列表為空且只剩一張圖片，阻止刪除
-    if (fileList.length === 0 ) {
+    if (fileList.length === 0) {
       message.warning("必需有一張照片！若修改請直接上傳新照片！");
       return;
     }
@@ -120,6 +123,19 @@ const LUser_update = () => {
         paddingBottom: "40px",
       }}
     >
+      {/* 返回上一頁按鈕 */}
+      <Button
+        onClick={handleGoBack}
+        style={{
+          position: "absolute", // 使用絕對定位
+          top: "70px", // 距離頂部20px
+          left: "50px", // 距離左邊20px
+          zIndex: 10, // 確保按鈕顯示在頁面最前面
+        }}
+      >
+        返回上一頁
+      </Button>
+
       <Row
         gutter={16}
         style={{ width: "100%", maxWidth: "1200px", justifyContent: "center" }}
@@ -140,63 +156,63 @@ const LUser_update = () => {
               <Input />
             </Form.Item>
 
-            <Form.Item name="lovehomeName" label="中途之家名稱" 
-            rules={[
-              {
-                required: true,
-                message: "請輸入中途之家名稱",
-              },
-            ]}>
+            <Form.Item name="lovehomeName" label="中途之家名稱"
+              rules={[
+                {
+                  required: true,
+                  message: "請輸入中途之家名稱",
+                },
+              ]}>
               <Input />
             </Form.Item>
 
             <Form.Item name="lovehomeCity" label="中途之家城市"
-            rules={[
-              {
-                required: true,
-                message: "請輸入中途之家城市",
-              },
-            ]}>
+              rules={[
+                {
+                  required: true,
+                  message: "請輸入中途之家城市",
+                },
+              ]}>
               <Input />
             </Form.Item>
 
             <Form.Item name="lovehomeDistrict" label="中途之家區域"
-            rules={[
-              {
-                required: true,
-                message: "請輸入中途之家區域",
-              },
-            ]}>
+              rules={[
+                {
+                  required: true,
+                  message: "請輸入中途之家區域",
+                },
+              ]}>
               <Input />
             </Form.Item>
 
             <Form.Item name="lovehomeAddress" label="詳細地址"
-            rules={[
-              {
-                required: true,
-                message: "請輸入詳細地址",
-              },
-            ]}>
+              rules={[
+                {
+                  required: true,
+                  message: "請輸入詳細地址",
+                },
+              ]}>
               <Input.TextArea showCount maxLength={100} />
             </Form.Item>
 
-            <Form.Item name="contactInfo" label="聯絡方式" 
-            rules={[
-              {
-                required: true,
-                message: "請輸入聯絡方式",
-              },
-            ]}>
+            <Form.Item name="contactInfo" label="聯絡方式"
+              rules={[
+                {
+                  required: true,
+                  message: "請輸入聯絡方式",
+                },
+              ]}>
               <Input.TextArea showCount maxLength={100} />
             </Form.Item>
 
-            <Form.Item name="capacity" label="可收容量" 
-            rules={[
-              {
-                required: true,
-                message: "請輸入可收容量",
-              },
-            ]}>
+            <Form.Item name="capacity" label="可收容量"
+              rules={[
+                {
+                  required: true,
+                  message: "請輸入可收容量",
+                },
+              ]}>
               <Input />
             </Form.Item>
 
@@ -204,20 +220,20 @@ const LUser_update = () => {
               <Input disabled />
             </Form.Item>
 
-              <ProFormUploadButton
-                label="中途之家照片"
-                name="lovehomeImage_Base64"
-                title="上傳照片"
-                maxCount={1}
-                fieldProps={{
-                  beforeUpload: () => false,
-                  accept: ".png, .jpg, .jpeg",
-                  listType: "picture",
-                  onChange: handleImageUpload,
-                }}
-                
-                fileList={fileList}
-              />
+            <ProFormUploadButton
+              label="中途之家照片"
+              name="lovehomeImage_Base64"
+              title="上傳照片"
+              maxCount={1}
+              fieldProps={{
+                beforeUpload: () => false,
+                accept: ".png, .jpg, .jpeg",
+                listType: "picture",
+                onChange: handleImageUpload,
+              }}
+
+              fileList={fileList}
+            />
 
             <Form.Item
               wrapperCol={{ span: 24 }}

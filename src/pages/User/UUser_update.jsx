@@ -7,6 +7,10 @@ import { userData, updateUser } from "../../services/userService";
 const UserUpdate = () => {
   const [form] = Form.useForm();
 
+  const handleGoBack = () => {
+    window.history.back(); // 或者 window.history.go(-1);
+  };
+
   const onFinish = async (fieldsValue) => {
     console.log("表單資料：", fieldsValue);
 
@@ -75,6 +79,19 @@ const UserUpdate = () => {
         paddingBottom: "40px",
       }}
     >
+      {/* 返回上一頁按鈕 */}
+      <Button
+        onClick={handleGoBack}
+        style={{
+          position: "absolute", // 使用絕對定位
+          top: "70px", // 距離頂部20px
+          left: "50px", // 距離左邊20px
+          zIndex: 10, // 確保按鈕顯示在頁面最前面
+        }}
+      >
+        返回上一頁
+      </Button>
+
       <Row
         gutter={16}
         style={{ width: "100%", maxWidth: "1200px", justifyContent: "center" }}

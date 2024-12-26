@@ -21,18 +21,28 @@ const Lovehome = () => {
   }, []);
 
   return (
-    <Row gutter={16}>
+    <div
+    style={{
+      display: "grid",
+      gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", // 卡片自動適應寬度
+      justifyContent: "center", // 卡片置中
+      gap: "20px",              // 卡片之間的固定間距
+      padding: "20px",          // 父容器內部的間距
+      maxWidth: "1080px", // 限制容器最大寬度
+      margin: "0 auto", // 居中容器
+    }}
+    >
       {lovehomes && lovehomes.length > 0 ? (
         lovehomes.map((lovehome) => (
           <Col span={6} key={lovehome.lovehomeId}>
             <Card
               style={{ 
                 width: 300,
-                height: 400,
+                height: 350,
                 overflow: "hidden",
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "space-evenly",
+                justifyContent: "stretch",
                 }}
               cover={
                 <div
@@ -76,7 +86,8 @@ const Lovehome = () => {
       ) : (
         <div>暫無資料</div>
       )}
-    </Row>
+
+</div>
   );
 };
 

@@ -6,7 +6,7 @@ import {
   ProFormSelect,
   ProFormText,
 } from "@ant-design/pro-components";
-import { Form, message, Modal } from "antd";
+import { Form, message, Modal , Button } from "antd";
 import { userData } from "../../services/userService";
 import { report, lovehome_list } from "../../services/commonService";
 import { checkSession } from "../../services/authService";
@@ -21,6 +21,10 @@ const Report = () => {
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
   const alertTriggeredRef = useRef(false); // 用於追蹤 alert 是否已被觸發
+
+  const handleGoBack = () => {
+    window.history.back(); // 或者 window.history.go(-1);
+  };
 
   useEffect(() => {
     const verifyLoginStatus = async () => {
@@ -139,6 +143,20 @@ const Report = () => {
   };
 
   return (
+    <div>
+      {/* 返回上一頁按鈕 */}
+      <Button
+        onClick={handleGoBack}
+        style={{
+          position: "absolute", // 使用絕對定位
+          top: "70px", // 距離頂部20px
+          left: "50px", // 距離左邊20px
+          zIndex: 10, // 確保按鈕顯示在頁面最前面
+        }}
+      >
+        返回上一頁
+      </Button>
+    
     <ProForm form={form} onFinish={onFinish} autoFocusFirstInput>
       {contextHolder}
       <ProFormText name="reported_account" label="通報人帳號" readonly />
@@ -203,6 +221,7 @@ const Report = () => {
         />
       </ProForm.Group>
     </ProForm>
+    </div>
   );
 };
 export default Report;

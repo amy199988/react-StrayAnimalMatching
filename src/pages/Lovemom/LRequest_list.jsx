@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { EditableProTable } from "@ant-design/pro-components";
-import { Space, message, Popconfirm } from "antd";
+import { Space, message, Popconfirm, Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import { lovehomeRequest, deleteRequest } from "../../services/lovehomeService";
 
@@ -8,7 +8,11 @@ const LRequestList = () => {
   const [dataSource, setDataSource] = useState([]);
   const navigate = useNavigate();
 
-  const confirm = async(request_number) => {
+  const handleGoBack = () => {
+    window.history.back(); // 或者 window.history.go(-1);
+  };
+
+  const confirm = async (request_number) => {
     try {
       await deleteRequest(request_number);
       setDataSource((prevDataSource) =>
@@ -116,27 +120,42 @@ const LRequestList = () => {
   ];
 
   return (
-    <Space
-      direction="vertical"
-      size="middle"
-      style={{
-        display: "flex",
-      }}
-    >
-      <EditableProTable
-        headerTitle="申請領養清單"
-        columns={columns}
-        rowKey="request_number"
-        scroll={{
-          x: 960,
+    <div>
+      {/* 返回上一頁按鈕 */}
+      <Button
+        onClick={handleGoBack}
+        style={{
+          position: "absolute", // 使用絕對定位
+          top: "70px", // 距離頂部20px
+          left: "50px", // 距離左邊20px
+          zIndex: 10, // 確保按鈕顯示在頁面最前面
         }}
-        value={dataSource}
-        recordCreatorProps={false}
-        editable={{
-          type: "single",
+      >
+        返回上一頁
+      </Button>
+
+      <Space
+        direction="vertical"
+        size="middle"
+        style={{
+          display: "flex",
         }}
-      />
-    </Space>
+      >
+        <EditableProTable
+          headerTitle="申請領養清單"
+          columns={columns}
+          rowKey="request_number"
+          scroll={{
+            x: 960,
+          }}
+          value={dataSource}
+          recordCreatorProps={false}
+          editable={{
+            type: "single",
+          }}
+        />
+      </Space>
+    </div>
   );
 };
 export default LRequestList;

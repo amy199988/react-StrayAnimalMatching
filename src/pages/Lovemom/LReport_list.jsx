@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { EditableProTable } from "@ant-design/pro-components";
-import { Space, message, Popconfirm } from "antd";
+import { Space, message, Popconfirm, Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import { lovehomeReport, deleteReport } from "../../services/lovehomeService";
 
 const LReportList = () => {
   const [dataSource, setDataSource] = useState([]);
   const navigate = useNavigate();
+
+  const handleGoBack = () => {
+    window.history.back(); // 或者 window.history.go(-1);
+  };
 
   const fetchReportList = async () => {
     try {
@@ -30,28 +34,28 @@ const LReportList = () => {
     fetchReportList();
   }, []);
 
-  const confirm = async(report_number) => {
-      try {
-        await deleteReport(report_number);
-        setDataSource((prevDataSource) =>
-          prevDataSource.filter(
-            (report) => report.report_number !== report_number
-          )
-        );
-        message.success("刪除成功！");
-      } catch (error) {
-        console.error("Error delete request:", error);
-        message.error("刪除失敗，請稍後再試。");
-      }
-    };
-    const cancel = (e) => {
-      console.log(e);
-      message.error("已取消刪除");
-    };
+  const confirm = async (report_number) => {
+    try {
+      await deleteReport(report_number);
+      setDataSource((prevDataSource) =>
+        prevDataSource.filter(
+          (report) => report.report_number !== report_number
+        )
+      );
+      message.success("刪除成功！");
+    } catch (error) {
+      console.error("Error delete request:", error);
+      message.error("刪除失敗，請稍後再試。");
+    }
+  };
+  const cancel = (e) => {
+    console.log(e);
+    message.error("已取消刪除");
+  };
 
-    const onClick = (report_number) => {
-      navigate(`/lovehome/report_list/info?report_number=${report_number}`);
-    };
+  const onClick = (report_number) => {
+    navigate(`/lovehome/report_list/info?report_number=${report_number}`);
+  };
 
   const columns = [
     {
@@ -113,27 +117,42 @@ const LReportList = () => {
   ];
 
   return (
-    <Space
-      direction="vertical"
-      size="middle"
-      style={{
-        display: "flex",
-      }}
-    >
-      <EditableProTable
-        headerTitle="通報救援清單"
-        columns={columns}
-        rowKey="report_number"
-        scroll={{
-          x: 960,
+    <div>
+      {/* 返回上一頁按鈕 */}
+      <Button
+        onClick={handleGoBack}
+        style={{
+          position: "absolute", // 使用絕對定位
+          top: "70px", // 距離頂部20px
+          left: "50px", // 距離左邊20px
+          zIndex: 10, // 確保按鈕顯示在頁面最前面
         }}
-        value={dataSource}
-        recordCreatorProps={false}
-        editable={{
-          type: "single",
+      >
+        返回上一頁
+      </Button>
+
+      <Space
+        direction="vertical"
+        size="middle"
+        style={{
+          display: "flex",
         }}
-      />
-    </Space>
+      >
+        <EditableProTable
+          headerTitle="通報救援清單"
+          columns={columns}
+          rowKey="report_number"
+          scroll={{
+            x: 960,
+          }}
+          value={dataSource}
+          recordCreatorProps={false}
+          editable={{
+            type: "single",
+          }}
+        />
+      </Space>
+    </div>
   );
 };
 export default LReportList;

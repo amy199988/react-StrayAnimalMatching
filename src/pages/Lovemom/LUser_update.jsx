@@ -110,7 +110,7 @@ const LUser_update = () => {
           position: "absolute", // 使用絕對定位
           top: "70px", // 距離頂部20px
           left: "50px", // 距離左邊20px
-          zIndex: 10, // 确保按钮显示在页面最前面
+          zIndex: 10, // 確保按鈕顯示在頁面最前面
         }}
       >
         返回上一頁

@@ -6,7 +6,7 @@ import {
   ProFormTextArea,
   ProFormUploadButton,
 } from "@ant-design/pro-components";
-import { Table, Space, message, Form } from "antd";
+import { Table, Space, message, Form, Button } from "antd";
 import { allLovehomeData } from "../../services/managerService";
 import { updateLovehome } from "../../services/managerService";
 
@@ -19,6 +19,9 @@ const AllLovehomelist = () => {
   const [selectedLovehome, setSelectedlovehome] = useState(null);
   const [form] = Form.useForm();
   const [CityFilters, setCityFilters] = useState([]);
+  const handleGoBack = () => {
+    window.history.back(); // 或者 window.history.go(-1);
+  };
 
   const fetchLovehomeList = async () => {
     try {
@@ -132,13 +135,13 @@ const AllLovehomelist = () => {
       setFileList(
         lovehome.lovehomeImage_Base64
           ? [
-              {
-                uid: "-1",
-                name: "lovehome_image",
-                status: "done",
-                url: lovehome.lovehomeImage_Base64,
-              },
-            ]
+            {
+              uid: "-1",
+              name: "lovehome_image",
+              status: "done",
+              url: lovehome.lovehomeImage_Base64,
+            },
+          ]
           : []
       );
       setDrawerVisit(true);
@@ -203,6 +206,17 @@ const AllLovehomelist = () => {
   return (
     <>
       {contextHolder}
+      <Button
+        onClick={handleGoBack}
+        style={{
+          position: "absolute", // 使用絕對定位
+          top: "70px", // 距離頂部20px
+          left: "50px", // 距離左邊20px
+          zIndex: 10, // 確保按鈕顯示在頁面最前面
+        }}
+      >
+        返回上一頁
+      </Button>
       <Space
         direction="vertical"
         size="middle"

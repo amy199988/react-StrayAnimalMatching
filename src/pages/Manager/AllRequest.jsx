@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Space, message, Popconfirm, Table, Badge } from "antd";
+import { Space, message, Popconfirm, Table, Badge , Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import { deleteRequest } from "../../services/lovehomeService";
 import { allRequestData } from "../../services/managerService";
@@ -8,6 +8,10 @@ const AllRequestlist = () => {
   const [dataSource, setDataSource] = useState([]);
   const navigate = useNavigate();
   const [LovehomeFilters, setLovehomeFilters] = useState([]);
+
+  const handleGoBack = () => {
+    window.history.back(); // 或者 window.history.go(-1);
+  };
 
   const confirm = async (request_number) => {
     try {
@@ -143,6 +147,18 @@ const AllRequestlist = () => {
 
   return (
     <>
+      {/* 返回上一頁按鈕 */}
+      <Button
+        onClick={handleGoBack}
+        style={{
+          position: "absolute", // 使用絕對定位
+          top: "70px", // 距離頂部20px
+          left: "50px", // 距離左邊20px
+          zIndex: 10, // 確保按鈕顯示在頁面最前面
+        }}
+      >
+        返回上一頁
+      </Button>
       <Space
         direction="vertical"
         size="middle"
