@@ -10,9 +10,6 @@ const Adoption = () => {
   const navigate = useNavigate();
   const [adoptionCats, setAdoptionCats] = useState([]);
 
-  const handleGoBack = () => {
-    window.history.back(); // 或者 window.history.go(-1);
-  };
 
   useEffect(() => {
     const loadCats = async () => {
@@ -85,19 +82,6 @@ const Adoption = () => {
         margin: "0 auto", // 居中容器
       }}
     >
-      {/* 返回上一頁按鈕 */}
-      <Button
-        onClick={handleGoBack}
-        style={{
-          position: "absolute", // 使用絕對定位
-          top: "70px", // 距離頂部20px
-          left: "50px", // 距離左邊20px
-          zIndex: 10, // 確保按鈕顯示在頁面最前面
-        }}
-      >
-        返回上一頁
-      </Button>
-
       {adoptionCats && adoptionCats.length > 0 ? (
         adoptionCats.map((cat) => (
           <Card

@@ -11,7 +11,7 @@ const LUser_update = () => {
   const [selectedLovemom, setSelectedLovemom] = useState(null);
 
   const handleGoBack = () => {
-    window.history.back(); // 或者 window.history.go(-1);
+    window.location.href = "/lovehome";
   };
 
   const onFinish = async (fieldsValue) => {

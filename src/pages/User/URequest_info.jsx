@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Descriptions } from "antd";
+import { Descriptions , Button} from "antd";
 import { useSearchParams } from "react-router-dom";
 import { Requests } from "../../services/lovehomeService";
 
@@ -9,6 +9,11 @@ const URequestInfo = () => {
   const [requestData, setrequestData] = useState(null);
   const [searchParams] = useSearchParams();
   const request_number = searchParams.get("request_number");
+
+  const handleGoBack = () => {
+    window.history.back(); // 或者 window.history.go(-1);
+  };
+
 
   useEffect(() => {
     const loadRequestData = async () => {
@@ -116,6 +121,19 @@ const URequestInfo = () => {
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         }}
       >
+      {/* 返回上一頁按鈕 */}
+      <Button
+        onClick={handleGoBack}
+        style={{
+          position: "absolute", // 使用絕對定位
+          top: "70px", // 距離頂部20px
+          left: "50px", // 距離左邊20px
+          zIndex: 10, // 確保按鈕顯示在頁面最前面
+        }}
+      >
+        返回上一頁
+      </Button>
+
         <Descriptions
           title="申請領養表單"
           layout="vertical"

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Menu,message } from "antd";
+import { Menu, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import {
   CatIcon,
@@ -29,6 +29,10 @@ const MyMenu = () => {
 
   const items = [
     {
+      label: <a href="/">回到首頁</a>,
+      key: "index",
+    },
+    {
       label: "通報浪浪",
       key: "report",
       icon: <ReportIcon style={{ fontSize: "24px" }} />,
@@ -45,30 +49,30 @@ const MyMenu = () => {
     },
     ...(role === "role_user"
       ? [
-          {
-            label: "普通會員中心",
-            key: "user",
-            icon: <UserIcon style={{ fontSize: "24px" }} />,
-          },
-        ]
+        {
+          label: "普通會員中心",
+          key: "user",
+          icon: <UserIcon style={{ fontSize: "24px" }} />,
+        },
+      ]
       : []),
     ...(role === "role_lovemom"
       ? [
-          {
-            label: "愛媽會員中心",
-            key: "lovemom",
-            icon: <UserIcon style={{ fontSize: "24px" }} />,
-          },
-        ]
+        {
+          label: "愛媽會員中心",
+          key: "lovemom",
+          icon: <UserIcon style={{ fontSize: "24px" }} />,
+        },
+      ]
       : []),
     ...(role === "role_manager"
       ? [
-          {
-            label: "管理員頁面",
-            key: "manager",
-            icon: <UserIcon style={{ fontSize: "24px" }} />,
-          },
-        ]
+        {
+          label: "管理員頁面",
+          key: "manager",
+          icon: <UserIcon style={{ fontSize: "24px" }} />,
+        },
+      ]
       : []),
     // 根據登入狀態顯示登入或登出按鈕
     {
@@ -76,10 +80,7 @@ const MyMenu = () => {
       key: isLoggedIn ? "logout" : "login",
       icon: <LoginIcon style={{ fontSize: "24px" }} />,
     },
-    {
-      label: <a href="/">回到首頁</a>,
-      key: "index",
-    },
+
   ];
 
   const filteredItems = items.filter((item) => item.visible !== false);
@@ -111,7 +112,7 @@ const MyMenu = () => {
     setIsLoggedIn(false); // 設置為未登入狀態
 
     // 登出後導向首頁
-  
+
     message.success("登出成功");
     setTimeout(() => {
       window.location.href = "/";

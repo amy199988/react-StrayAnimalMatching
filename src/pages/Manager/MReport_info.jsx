@@ -10,6 +10,10 @@ const MReportInfo = () => {
   const report_number = searchParams.get("report_number");
   const [messageApi, contextHolder] = message.useMessage();
 
+  const handleGoBack = () => {
+    window.history.back(); // 或者 window.history.go(-1);
+  };
+
   useEffect(() => {
     const loadReportData = async () => {
       try {
@@ -172,6 +176,19 @@ const MReportInfo = () => {
           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
         }}
       >
+      {/* 返回上一頁按鈕 */}
+      <Button
+        onClick={handleGoBack}
+        style={{
+          position: "absolute", // 使用絕對定位
+          top: "70px", // 距離頂部20px
+          left: "50px", // 距離左邊20px
+          zIndex: 10, // 確保按鈕顯示在頁面最前面
+        }}
+      >
+        返回上一頁
+      </Button>
+              
         <Descriptions
           title="通報救援表單"
           layout="vertical"

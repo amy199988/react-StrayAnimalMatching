@@ -8,7 +8,7 @@ const UserUpdate = () => {
   const [form] = Form.useForm();
 
   const handleGoBack = () => {
-    window.history.back(); // 或者 window.history.go(-1);
+    window.location.href = "/user";
   };
 
   const onFinish = async (fieldsValue) => {

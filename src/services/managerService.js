@@ -22,13 +22,13 @@ export const allUserData = async () => {
 /**
  * 修改會員資料
  * @param {number} updateUserId
- * @param {Object} updateUserData 更新中途的資料
+ * @param {Object} updateUserData 更新會員的資料
  * @returns {Promise<Object>} 包含新增結果的 API
  */
 export const updateUser = async (updateUserData, updateUserId) => {
   try {
     const response = await fetch(
-      `${API_BASE_URL}/manager/all_lovehome/${updateUserId}`,
+      `${API_BASE_URL}/manager/all_user/${updateUserId}`,
       {
         method: "PUT",
         credentials: "include",
@@ -41,7 +41,7 @@ export const updateUser = async (updateUserData, updateUserId) => {
 
     if (!response.ok) {
       const errorDetails = await response.text();
-      throw new Error(`更新中途失敗: ${errorDetails}`);
+      throw new Error(`更新會員失敗: ${errorDetails}`);
     }
 
     return response.json();
@@ -101,6 +101,34 @@ export const updateLovehome = async (updateLovehomeData, updateLovehomeId) => {
     throw error;
   }
 };
+
+/**
+ * 刪除會員資料
+ * @param {number} userId
+ * @returns {Promise<Object>} 包含新增結果的 API
+ */
+export const deleteUser = async (userId) => {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/manager/all_user/${userId}`,
+      {
+        method: "DELETE",
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      const errorDetails = await response.text();
+      throw new Error(`刪除中途失敗: ${errorDetails}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("API錯誤:", error);
+    throw error;
+  }
+};
+
 
 /**
  * 查看所有貓咪資料

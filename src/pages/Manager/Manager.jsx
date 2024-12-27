@@ -47,13 +47,13 @@ const Manager = () => {
       navigate("/manager/all_request");
     } else if (key === "all_report") {
       navigate("/manager/all_report");
-    }else if (key === "all_user") {
+    } else if (key === "all_user") {
       navigate("/manager/all_user");
     }
   };
 
   return (
-<div
+    <div
       style={{
         display: "flex",
         flexDirection: "column",
@@ -62,21 +62,15 @@ const Manager = () => {
       }}
     >
 
-    <Space wrap style={{ marginBottom: "48px" }} >
-    <Button onClick={() => handleNavigation("all_user")}>會員列表</Button>
-      <Button onClick={() => handleNavigation("all_cat")}>貓咪列表</Button>
-      <Button onClick={() => handleNavigation("all_lovehome")}>
-        中途之家列表
-      </Button>
-      <Button onClick={() => handleNavigation("all_request")}>
-        申請領養列表
-      </Button>
-      <Button onClick={() => handleNavigation("all_report")}>
-        通報救援列表
-      </Button>
-    </Space>
+      <Space wrap style={{ marginBottom: "48px" }} >
+        <Button onClick={() => handleNavigation("all_user")}>會員列表</Button>
+        <Button onClick={() => handleNavigation("all_lovehome")}>中途之家列表</Button>
+        <Button onClick={() => handleNavigation("all_cat")}>貓咪列表</Button>
+        <Button onClick={() => handleNavigation("all_request")}>申請領養列表</Button>
+        <Button onClick={() => handleNavigation("all_report")}>通報救援列表</Button>
+      </Space>
 
-    <Row
+      <Row
         gutter={16}
         style={{ width: "100%", maxWidth: "1200px", justifyContent: "center" }}
       >

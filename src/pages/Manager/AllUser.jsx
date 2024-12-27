@@ -3,26 +3,22 @@ import {
   DrawerForm,
   ProForm,
   ProFormText,
-  ProFormTextArea,
-  ProFormUploadButton,
 } from "@ant-design/pro-components";
-import { Table, Space, message, Form , Button } from "antd";
+import { Table, Space, message, Form, Button ,Popconfirm } from "antd";
 import moment from "moment";
-import { allUserData } from "../../services/managerService";
-import { updateUser } from "../../services/managerService";
+import { allUserData, updateUser, deleteUser } from "../../services/managerService";
 
 const AllUserlist = () => {
   const [drawerVisit, setDrawerVisit] = useState(false);
   const [userlistData, setuserlistData] = useState([]);
-  const [fileList, setFileList] = useState([]);
+  //  const [fileList, setFileList] = useState([]);
   const [messageApi, contextHolder] = message.useMessage();
   const [selecteduser, setSelecteduser] = useState(null);
-  const [lovehomeImagebase64, setLovehomeImageBase64] = useState(null);
   const [form] = Form.useForm();
   //  const [RoleFilters, setRoleFilters] = useState([]);
 
   const handleGoBack = () => {
-    window.history.back(); // 或者 window.history.go(-1);
+    window.location.href = "/manager";
   };
 
   // 處理下拉選單值改變
@@ -47,25 +43,11 @@ const AllUserlist = () => {
         email: user.email,
         active: user.active,
         role: user.role,
-        lovehomeDto: user.lovehomeDto,
-        // lovehomeDto:
-        //   user.role === "role_lovemom"
-        //     ? {
-        //       lovehomeId: user.lovehomeId,
-        //       lovehomeName: user.lovehomeName,
-        //       lovehomeCity: user.lovehomeCity,
-        //       lovehomeDistrict: user.lovehomeDistrict,
-        //       lovehomeAddress: user.lovehomeAddress,
-        //       contactInfo: user.contactInfo,
-        //       capacity: user.capacity,
-        //       lovehomeImage_Base64: user.lovehomeImageBase64,
-        //     }
-        //     : null,
       }));
       console.log(users);
       setuserlistData(users);
     } catch (error) {
-      console.error("Error fetching lovehomelist:", error);
+      console.error("Error fetching userlist:", error);
     }
   };
 
@@ -73,16 +55,24 @@ const AllUserlist = () => {
     fetchUserList();
   }, []);
 
-  // useEffect(() => {
-  //   const uniqueRole = Array.from(
-  //     new Set(userlistData.map((user) => user.role))
-  //   ).map((role) => ({
-  //     text: role,
-  //     value: role,
-
-  //   }));
-  //   setRoleFilters(uniqueRole);
-  // }, [userlistData]);
+  const confirm = async (key) => {
+    try {
+      await deleteUser(key);
+      fetchUserList((prevDataSource) =>
+        prevDataSource.filter(
+          (cat) => cat.key !== key
+        )
+      );
+      message.success("刪除成功！");
+    } catch (error) {
+      console.error("Error delete request:", error);
+      message.error("刪除失敗，請稍後再試。");
+    }
+  };
+  const cancel = (e) => {
+    console.log(e);
+    message.error("已取消刪除");
+  };
 
   const UpdateonFinish = async (fieldsValue) => {
     console.log("表單資料：", fieldsValue);
@@ -98,25 +88,11 @@ const AllUserlist = () => {
       account: fieldsValue.account,
       phone: fieldsValue.phone,
       birthdate: fieldsValue.birthdate
-        ? fieldsValue.birthdate.format("YYYY-MM-DD")
+        ? fieldsValue.birthdate
         : null,
       email: fieldsValue.email,
       active: fieldsValue.active,
       role: fieldsValue.role,
-      LINEId: fieldsValue.LINEId,
-      lovehomeDto: fieldsValue.lovehomeDto,
-      // fieldsValue.role === "role_lovemom"
-      //   ? {
-      //     lovehomeId: fieldsValue.lovehomeId,
-      //     lovehomeName: fieldsValue.lovehomeName,
-      //     lovehomeCity: fieldsValue.lovehomeCity,
-      //     lovehomeDistrict: fieldsValue.lovehomeDistrict,
-      //     lovehomeAddress: fieldsValue.lovehomeAddress,
-      //     contactInfo: fieldsValue.contactInfo,
-      //     capacity: fieldsValue.capacity,
-      //     lovehomeImage_Base64: fieldsValue.lovehomeImageBase64,
-      //   }
-      //  : null,
     };
 
     console.log("提交的更新 User Date：", updateUserData);
@@ -140,24 +116,6 @@ const AllUserlist = () => {
     }
   };
 
-  // const handleImageUpload = ({ file, fileList }) => {
-  //   setFileList([...fileList]);
-
-  //   const originFile = file.originFileObj || file;
-  //   if (originFile) {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       console.log("圖片 Base64：" + reader.result);
-  //       setLovehomeImageBase64(reader.result);
-  //     };
-  //     reader.onerror = (error) => {
-  //       console.log("圖片讀取錯誤：", error);
-  //     };
-
-  //     reader.readAsDataURL(originFile);
-  //   }
-  // };
-
   const handleNavigation = (key, user) => {
     if (key === "userupdate") {
       setSelecteduser(user);
@@ -172,32 +130,7 @@ const AllUserlist = () => {
         email: user.email,
         active: user.active,
         role: user.role,
-        lovehomeDto: user.lovehomeDto,
-        // lovehomeDto:
-        //   user.role === "role_lovemom"
-        //     ? {
-        //       lovehomeName: user.lovehomeName,
-        //       lovehomeCity: user.lovehomeCity,
-        //       lovehomeDistrict: user.lovehomeDistrict,
-        //       lovehomeAddress: user.lovehomeAddress,
-        //       contactInfo: user.contactInfo,
-        //       capacity: user.capacity,
-        //       lovehomeImage_Base64: user.lovehomeImageBase64,
-        //     }
-        //     : null,
       });
-      setFileList(
-        user.lovehomeImage_Base64
-          ? [
-            {
-              uid: "-1",
-              name: "lovehome_image",
-              status: "done",
-              url: user.lovehomeImage_Base64,
-            },
-          ]
-          : []
-      );
       setDrawerVisit(true);
     }
   };
@@ -211,12 +144,6 @@ const AllUserlist = () => {
       title: "名稱",
       dataIndex: "userName",
     },
-    // {
-    //   title: "城市",
-    //   dataIndex: "lovehomeCity",
-    //   filters: CityFilters,
-    //   onFilter: (value, record) => record.lovehomeCity.startsWith(value),
-    // },
     {
       title: "帳號",
       dataIndex: "account",
@@ -289,14 +216,24 @@ const AllUserlist = () => {
       render: (_, record) => (
         <Space size="middle">
           <a onClick={() => handleNavigation("userupdate", record)}>更新</a>
-          <a>刪除</a>
+          <Popconfirm
+            title="刪除"
+            description="將連同會員的中途之家資料一同刪除，確定要刪除此筆清單嗎?"
+            onConfirm={() => confirm(record.key)}
+            onCancel={cancel}
+            okText="確定"
+            cancelText="取消"
+          >
+            <a>刪除</a>
+          </Popconfirm>
         </Space>
       ),
     },
   ];
 
   return (
-    <>
+    <>   
+    {contextHolder}
       {/* 返回上一頁按鈕 */}
       <Button
         onClick={handleGoBack}
@@ -309,7 +246,6 @@ const AllUserlist = () => {
       >
         返回上一頁
       </Button>
-      {contextHolder}
       <Space
         direction="vertical"
         size="middle"
@@ -402,37 +338,7 @@ const AllUserlist = () => {
             ]}
           />
 
-
-
-
-
-
-          <ProFormText readonly name="currentOccupancy" label="目前佔用率" />
         </ProForm.Group>
-        {/* <ProFormUploadButton
-          label="照片上傳"
-          name="lovehomeImage_Base64"
-          title="上傳照片"
-          maxCount={1}
-          fieldProps={{
-            beforeUpload: () => false,
-            accept: ".png, .jpg, .jpeg",
-            listType: "picture",
-            onChange: handleImageUpload,
-          }}
-          fileList={fileList}
-        /> */}
-
-        {/* <ProFormText readonly name="lovehomeId" label="中途編號" />
-<ProFormText readonly name="lovehomeName" label="中途名稱" />
-<ProFormText readonly name="lovehomeCity" label="城市" />
-<ProFormText readonly name="lovehomeDistrict" label="地區" />
-<ProFormText readonly name="lovehomeAddress" label="地址" />
-<ProFormText readonly name="contactInfo" label="聯絡方式" />
-<ProFormText readonly name="capacity" label="可收容量" />
-<ProFormText readonly name="currentOccupancy" label="目前佔用率" />
-<ProFormText readonly name="lovehomeImage_Base64" label="照片" /> */}
-
 
       </DrawerForm>
     </>

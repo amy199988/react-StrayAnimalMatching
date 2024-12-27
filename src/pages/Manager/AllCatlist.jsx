@@ -7,9 +7,9 @@ import {
   ProFormTextArea,
   ProFormUploadButton,
 } from "@ant-design/pro-components";
-import { Table, Space, message, Form , Button } from "antd";
+import { Table, Space, message, Form , Button ,Popconfirm } from "antd";
 import { allCatData } from "../../services/managerService";
-import { updateCat } from "../../services/lovehomeService";
+import { updateCat, deleteCatId } from "../../services/lovehomeService";
 
 const AllCatlist = () => {
   const [drawerVisit, setDrawerVisit] = useState(false);
@@ -20,8 +20,9 @@ const AllCatlist = () => {
   const [selectedCat, setSelectedCat] = useState(null);
   const [form] = Form.useForm();
   const [lovehomeFilters, setLovehomeFilters] = useState([]);
+  
   const handleGoBack = () => {
-    window.history.back(); // 或者 window.history.go(-1);
+    window.location.href = "/manager";
   };
 
   const fetchCatList = async () => {
@@ -48,6 +49,25 @@ const AllCatlist = () => {
   useEffect(() => {
     fetchCatList();
   }, []);
+
+  const confirm = async (key) => {
+    try {
+      await deleteCatId(key);
+      setcatlistData((prevDataSource) =>
+        prevDataSource.filter(
+          (cat) => cat.key !== key
+        )
+      );
+      message.success("刪除成功！");
+    } catch (error) {
+      console.error("Error delete request:", error);
+      message.error("刪除失敗，請稍後再試。");
+    }
+  };
+  const cancel = (e) => {
+    console.log(e);
+    message.error("已取消刪除");
+  };
 
   useEffect(() => {
     const uniqueLovehomes = Array.from(
@@ -209,7 +229,16 @@ const AllCatlist = () => {
       render: (_, record) => (
         <Space size="middle">
           <a onClick={() => handleNavigation("catupdate", record)}>更新</a>
+          <Popconfirm
+            title="刪除"
+            description="確定要刪除此筆清單嗎?"
+            onConfirm={() => confirm(record.key)}
+            onCancel={cancel}
+            okText="確定"
+            cancelText="取消"
+          >
           <a>刪除</a>
+          </Popconfirm>
         </Space>
       ),
     },

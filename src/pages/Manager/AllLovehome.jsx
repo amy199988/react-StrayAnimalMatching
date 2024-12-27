@@ -7,8 +7,7 @@ import {
   ProFormUploadButton,
 } from "@ant-design/pro-components";
 import { Table, Space, message, Form, Button } from "antd";
-import { allLovehomeData } from "../../services/managerService";
-import { updateLovehome } from "../../services/managerService";
+import { allLovehomeData, updateLovehome } from "../../services/managerService";
 
 const AllLovehomelist = () => {
   const [drawerVisit, setDrawerVisit] = useState(false);
@@ -19,8 +18,9 @@ const AllLovehomelist = () => {
   const [selectedLovehome, setSelectedlovehome] = useState(null);
   const [form] = Form.useForm();
   const [CityFilters, setCityFilters] = useState([]);
+
   const handleGoBack = () => {
-    window.history.back(); // 或者 window.history.go(-1);
+    window.location.href = "/manager";
   };
 
   const fetchLovehomeList = async () => {
@@ -197,7 +197,6 @@ const AllLovehomelist = () => {
       render: (_, record) => (
         <Space size="middle">
           <a onClick={() => handleNavigation("lovehomeupdate", record)}>更新</a>
-          <a>刪除</a>
         </Space>
       ),
     },

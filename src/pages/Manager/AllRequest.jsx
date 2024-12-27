@@ -10,7 +10,7 @@ const AllRequestlist = () => {
   const [LovehomeFilters, setLovehomeFilters] = useState([]);
 
   const handleGoBack = () => {
-    window.history.back(); // 或者 window.history.go(-1);
+    window.location.href = "/manager";
   };
 
   const confirm = async (request_number) => {
@@ -135,8 +135,8 @@ const AllRequestlist = () => {
             description="確定要刪除此筆清單嗎?"
             onConfirm={() => confirm(record.request_number)}
             onCancel={cancel}
-            okText="Yes"
-            cancelText="No"
+            okText="確定"
+            cancelText="取消"
           >
             <a>刪除</a>
           </Popconfirm>

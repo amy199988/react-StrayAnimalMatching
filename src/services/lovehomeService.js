@@ -192,6 +192,33 @@ export const updateCat = async (updateCatData, updateCatId) => {
 };
 
 /**
+ * 刪除貓咪資料
+ * @param {number} CatId
+ * @returns {Promise<Object>} 包含新增結果的 API
+ */
+export const deleteCatId = async (CatId) => {
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/lovehome/cat_list/${CatId}`,
+      {
+        method: "DELETE",
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      const errorDetails = await response.text();
+      throw new Error(`刪除貓咪失敗: ${errorDetails}`);
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error("API錯誤:", error);
+    throw error;
+  }
+};
+
+/**
  * 查看申請領養的表單
  * @returns {Promise<Object>} 包含結果的 API
  */

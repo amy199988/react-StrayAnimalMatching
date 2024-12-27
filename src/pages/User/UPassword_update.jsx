@@ -25,7 +25,7 @@ const UpdatePassword = () => {
   const [form] = Form.useForm();
 
   const handleGoBack = () => {
-    window.history.back(); // 或者 window.history.go(-1);
+    window.location.href = "/user";
   };
 
   // 提交表單的處理函式

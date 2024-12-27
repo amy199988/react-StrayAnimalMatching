@@ -63,12 +63,8 @@ const User = () => {
       <Space wrap style={{ marginBottom: "48px" }}>
         <Button onClick={() => handleNavigation("User_update")}>修改會員資料</Button>
         <Button onClick={() => handleNavigation("Password_update")}>修改密碼</Button>
-        <Button onClick={() => handleNavigation("Urequest_list")}>
-          申請領養清單
-        </Button>
-        <Button onClick={() => handleNavigation("Ureport_list")}>
-          通報救援清單
-        </Button>
+        <Button onClick={() => handleNavigation("Urequest_list")}>申請領養清單</Button>
+        <Button onClick={() => handleNavigation("Ureport_list")}>通報救援清單</Button>
         {userId && <BindLineButton userId={userId} />}
       </Space>
       <Row

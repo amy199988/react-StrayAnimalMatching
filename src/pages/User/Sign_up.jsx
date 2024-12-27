@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Form, Input, DatePicker, Radio, Upload, message, Modal } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { sign_up } from "../../services/authService";
+import moment from "moment";
 const formItemLayout = {
   labelCol: {
     xs: {
@@ -40,6 +41,10 @@ const SignUp = () => {
 
   const handleGoBack = () => {
     window.history.back(); // 或者 window.history.go(-1);
+  };
+
+  const disabledDate = (current) => {
+    return current && current > moment().endOf("day"); // 禁用今天之後的日期
   };
 
   const onFinish = async (fieldsValue) => {
@@ -238,7 +243,7 @@ const SignUp = () => {
             },
           ]}
         >
-          <DatePicker />
+          <DatePicker disabledDate={disabledDate} />
         </Form.Item>
 
         <Form.Item

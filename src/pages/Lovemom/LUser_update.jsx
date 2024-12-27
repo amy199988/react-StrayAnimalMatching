@@ -8,7 +8,7 @@ const LUser_update = () => {
   const [form] = Form.useForm();
 
   const handleGoBack = () => {
-    window.history.back(); // 或者 window.history.go(-1);
+    window.location.href = "/lovehome";
   };
 
   const onFinish = async (fieldsValue) => {
@@ -26,19 +26,6 @@ const LUser_update = () => {
       active: fieldsValue.active,
       role: fieldsValue.role,
       LINEId: fieldsValue.LINEId,
-      lovehomeDto:
-        fieldsValue.role === "role_lovemom"
-          ? {
-            lovehomeId: fieldsValue.lovehomeId,
-            lovehomeName: fieldsValue.lovehomeName,
-            lovehomeCity: fieldsValue.lovehomeCity,
-            lovehomeDistrict: fieldsValue.lovehomeDistrict,
-            lovehomeAddress: fieldsValue.lovehomeAddress,
-            contactInfo: fieldsValue.contactInfo,
-            capacity: fieldsValue.capacity,
-            lovehomeImage_Base64: fieldsValue.lovehomeImageBase64,
-          }
-          : null,
     };
 
     console.log("提交的 User Date：", updateUserDate)
@@ -74,15 +61,6 @@ const LUser_update = () => {
           email: apiResponse.data.email,
           active: apiResponse.data.active,
           role: apiResponse.data.role,
-          lovehomeId: apiResponse.data.lovehomeDto.lovehomeId,
-          lovehomeName: apiResponse.data.lovehomeDto.lovehomeName,
-          lovehomeCity: apiResponse.data.lovehomeDto.lovehomeCity,
-          lovehomeDistrict: apiResponse.data.lovehomeDto.lovehomeDistrict,
-          lovehomeAddress: apiResponse.data.lovehomeDto.lovehomeAddress,
-          contactInfo: apiResponse.data.lovehomeDto.contactInfo,
-          capacity: apiResponse.data.lovehomeDto.capacity,
-          currentOccupancy: apiResponse.data.lovehomeDto.currentOccupancy,
-          lovehomeImage_Base64: apiResponse.data.lovehomeDto.lovehomeImage_Base64
         });
         console.log(apiResponse);
       } catch (error) {
@@ -193,42 +171,6 @@ const LUser_update = () => {
                 <Radio value="role_user">普通帳號</Radio>
                 <Radio value="role_lovemom">愛媽帳號</Radio>
               </Radio.Group>
-            </Form.Item>
-
-            <Form.Item name="lovehomeId" label="中途之家編號" hidden>
-              <Input />
-            </Form.Item>
-
-            <Form.Item name="lovehomeName" label="中途之家名稱" hidden>
-              <Input />
-            </Form.Item>
-
-            <Form.Item name="lovehomeCity" label="中途之家城市" hidden>
-              <Input />
-            </Form.Item>
-
-            <Form.Item name="lovehomeDistrict" label="中途之家區域" hidden>
-              <Input />
-            </Form.Item>
-
-            <Form.Item name="lovehomeAddress" label="詳細地址" hidden>
-              <Input.TextArea showCount maxLength={100} />
-            </Form.Item>
-
-            <Form.Item name="contactInfo" label="聯絡方式" hidden>
-              <Input.TextArea showCount maxLength={100} />
-            </Form.Item>
-
-            <Form.Item name="capacity" label="可收容量" hidden>
-              <Input />
-            </Form.Item>
-
-            <Form.Item name="currentOccupancy" label="目前佔用率" hidden>
-              <Input />
-            </Form.Item>
-
-            <Form.Item name="lovehomeImage_Base64" label="照片" hidden>
-              <Input disabled />
             </Form.Item>
 
             <Form.Item
