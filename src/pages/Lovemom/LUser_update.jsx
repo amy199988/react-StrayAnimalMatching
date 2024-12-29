@@ -177,10 +177,10 @@ const LUser_update = () => {
               wrapperCol={{ span: 24 }}
               style={{ display: "flex", justifyContent: "center" }}
             >
-              <Button type="primary" htmlType="submit" style={{ marginRight: "8px" }}>
+              <Button href="/lovehome"style={{ marginRight: "8px" }}>取消</Button>
+              <Button type="primary" htmlType="submit" >
                 確認修改
               </Button>
-              <Button href="/lovehome">取消</Button>
             </Form.Item>
           </Form>
         </Col>

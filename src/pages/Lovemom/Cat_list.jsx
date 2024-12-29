@@ -198,30 +198,37 @@ const Catlist = () => {
   const columns = [
     {
       title: "ID",
+      align: "center",
       dataIndex: "catid",
     },
     {
       title: "名稱",
+      align: "center",
       dataIndex: "catname",
     },
     {
       title: "花紋",
+      align: "center",
       dataIndex: "breed",
     },
     {
-      title: "年齡",
+      title: "年齡(月份)",
+      align: "center",
       dataIndex: "age",
     },
     {
       title: "健康狀況",
+      align: "center",
       dataIndex: "healthstatus",
     },
     {
       title: "描述",
+      align: "center",
       dataIndex: "description",
     },
     {
       title: "照片",
+      align: "center",
       dataIndex: "catphotoUrl",
       render: (text, record) => {
         return record.catImage_Base64 ? "目前有照片" : "目前無照片";
@@ -229,6 +236,7 @@ const Catlist = () => {
     },
     {
       title: "領養狀態",
+      align: "center",
       dataIndex: "isApply",
       filters: [
         {
@@ -245,6 +253,7 @@ const Catlist = () => {
     },
     {
       title: "操作",
+      align: "center",
       dataIndex: "action",
       width: "12%",
       render: (_, record) => (
@@ -292,7 +301,11 @@ const Catlist = () => {
           <PlusOutlined />
           新增領養貓咪
         </Button>
-        <Table columns={columns} dataSource={catlistData} />
+        <Table
+          columns={columns}
+          dataSource={catlistData}
+          //scroll={{ x: 'max-content', y: 400 }}
+        />
       </Space>
       <ModalForm
         title="領養貓咪 新增"
@@ -304,6 +317,7 @@ const Catlist = () => {
             resetText: "取消",
           },
         }}
+        scroll={{ x: 'max-content', y: 400 }}
         onFinish={onFinsih}
         onOpenChange={(open) => {
           if (!open) {
@@ -343,7 +357,7 @@ const Catlist = () => {
               },
             ]}
             name="age"
-            label="貓咪年齡"
+            label="貓咪年齡(月份)"
             placeholder="請輸入年齡"
           />
           <ProFormText
@@ -353,7 +367,7 @@ const Catlist = () => {
               },
             ]}
             name="healthStatus"
-            label="特殊狀況"
+            label="健康狀況"
             placeholder="請輸入狀況"
           />
         </ProForm.Group>
@@ -437,7 +451,7 @@ const Catlist = () => {
               },
             ]}
             name="age"
-            label="貓咪年齡"
+            label="貓咪年齡(月份)"
             placeholder="請輸入年齡"
           />
           <ProFormText
@@ -447,7 +461,7 @@ const Catlist = () => {
               },
             ]}
             name="healthStatus"
-            label="特殊狀況"
+            label="健康狀況"
             placeholder="請輸入狀況"
           />
         </ProForm.Group>

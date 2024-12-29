@@ -171,36 +171,44 @@ const AllCatlist = () => {
     {
       title: "ID",
       dataIndex: "catid",
+      align: "center",
     },
     {
       title: "名稱",
       dataIndex: "catname",
+      align: "center",
     },
     {
       title: "花紋",
       dataIndex: "breed",
+      align: "center",
     },
     {
-      title: "年齡",
+      title: "年齡(月份)",
       dataIndex: "age",
+      align: "center",
     },
     {
       title: "健康狀況",
       dataIndex: "healthstatus",
+      align: "center",
     },
     {
       title: "描述",
       dataIndex: "description",
+      align: "center",
     },
     {
       title: "照片",
       dataIndex: "catphotoUrl",
+      align: "center",
       render: (text, record) => {
         return record.catImage_Base64 ? "目前有照片" : "目前無照片";
       },
     },
     {
       title: "領養狀態",
+      align: "center",
       dataIndex: "isApply",
       filters: [
         {
@@ -217,6 +225,7 @@ const AllCatlist = () => {
     },
     {
       title: "所屬中途之家",
+      align: "center",
       dataIndex: "lovehome",
       filters: lovehomeFilters,
       width: "12%",
@@ -224,6 +233,7 @@ const AllCatlist = () => {
     },
     {
       title: "操作",
+      align: "center",
       dataIndex: "action",
       width: "10%",
       render: (_, record) => (
@@ -318,7 +328,7 @@ const AllCatlist = () => {
               },
             ]}
             name="age"
-            label="貓咪年齡"
+            label="貓咪年齡(月份)"
             placeholder="請輸入年齡"
           />
           <ProFormText

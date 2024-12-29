@@ -128,7 +128,7 @@ const Adoption = () => {
                 <>
                   貓咪花紋：{cat.breed}
                   <br />
-                  貓咪年齡：{cat.age}
+                  貓咪年齡(月份)：{cat.age}
                   <br />
                   特殊狀況：{cat.healthStatus}
                   <br />

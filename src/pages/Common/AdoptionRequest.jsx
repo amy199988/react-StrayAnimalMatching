@@ -86,11 +86,26 @@ export default function AdoptionRequest() {
   };
 
   return (
-    <>
+    <div
+    style={{
+      display: "flex",           // 使用 Flexbox 排版
+      justifyContent: "center",  // 水平置中
+      alignItems: "center",      // 垂直置中
+      minHeight: "auto",        // 確保容器高度至少為視窗高度
+    }}
+  >
 
       {contextHolder}
       <ProForm
         form={form}
+        style={{
+          width: "100%",
+          maxWidth: "600px",         // 設置表單最大寬度
+          background: "#fff",        // 可選：表單背景色
+          borderRadius: "8px",       // 可選：圓角設計
+          boxShadow: "4px 4px 8px rgba(0, 0, 0, 0.1)", // 可選：陰影
+          padding: "24px",           // 表單內邊距
+        }}
         initialValues={{
           username: "",
           account: "",
@@ -117,7 +132,7 @@ export default function AdoptionRequest() {
           />
           <ProFormDigit
             name="age"
-            label="年齡"
+            label="年齡(月份)"
             placeholder="請輸入年齡"
             rules={[{ required: true, message: "這是必填項" }]}
           />
@@ -153,6 +168,6 @@ export default function AdoptionRequest() {
           ]}
         />
       </ProForm>
-    </>
+</div>
   );
 }

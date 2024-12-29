@@ -94,21 +94,26 @@ const AllReportlist = () => {
     {
       title: "通報救援編號",
       dataIndex: "report_number",
+      align: "center",
     },
     {
       title: "通報救援者名稱",
       dataIndex: "reporter",
+      align: "center",
     },
     {
       title: "通報區域",
       dataIndex: "reportDistrict",
+      align: "center",
     },
     {
       title: "通報日期",
       dataIndex: "reportDate",
+      align: "center",
     },
     {
       title: "通報狀況",
+      align: "center",
       dataIndex: "reportStatus",
       render: (status) => statusBadge(status),
       filters: [
@@ -129,12 +134,14 @@ const AllReportlist = () => {
     },
     {
       title: "屬於中途之家",
+      align: "center",
       dataIndex: "lovehome",
       filters: LovehomeFilters,
       onFilter: (value, record) => record.lovehome.startsWith(value),
     },
     {
       title: "操作",
+      align: "center",
       valueType: "option",
       render: (_, record) => (
         <Space size="middle">

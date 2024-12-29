@@ -5,7 +5,7 @@ const BindLineButton = ({ userId }) => {
   const handleBindLine = () => {
     const clientId = "2006672068"; // 替換為你的 LINE Channel ID
     const redirectUri = encodeURIComponent(
-      `https://2428-2402-7500-46a-37f0-5bc-c55-263e-79da.ngrok-free.app/callback`
+      `https://db38-2402-7500-486-9058-bd8a-28ec-1628-e0ea.ngrok-free.app/callback`
     ); // 將會員 ID 帶到回調 URL
     const state = generateRandomState(); // 防篡改的隨機字串
     const scope = encodeURIComponent("openid profile");

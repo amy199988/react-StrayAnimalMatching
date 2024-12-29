@@ -41,27 +41,32 @@ const URequestList = () => {
   const columns = [
     {
       title: "領養表單編號",
+      align: "center",
       dataIndex: "request_number",
       readonly: true,
     },
     {
       title: "申請領養者名稱",
+      align: "center",
       dataIndex: "applicant",
       readonly: true,
     },
     {
       title: "貓咪名稱",
+      align: "center",
       dataIndex: "adoptedcat",
       readonly: true,
     },
     {
       title: "申請日期",
+      align: "center",
       dataIndex: "request_date",
       valueType: "date",
       readonly: true,
     },
     {
       title: "申請狀況",
+      align: "center",
       dataIndex: "request_status",
       valueType: "select",
       valueEnum: {
@@ -81,6 +86,7 @@ const URequestList = () => {
     },
     {
       title: "操作",
+      align: "center",
       valueType: "option",
       render: (_, record) => (
         <Space size="middle">

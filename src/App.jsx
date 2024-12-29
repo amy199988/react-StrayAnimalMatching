@@ -203,7 +203,7 @@ const App = () => {
               background: "#dedede",
             }}
           >
-            Stary Animal Matching ©{new Date().getFullYear()} Created by Ant UED
+            Stary Animal Matching ©{new Date().getFullYear()} 
           </Footer>
         </Layout>
       </Router>

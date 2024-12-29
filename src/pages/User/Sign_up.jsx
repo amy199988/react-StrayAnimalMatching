@@ -127,7 +127,14 @@ const SignUp = () => {
   };
 
   return (
-    <>
+    <div
+    style={{
+      display: "flex",           // 使用 Flexbox 排版
+      justifyContent: "center",  // 水平置中
+      alignItems: "center",      // 垂直置中
+      minHeight: "auto",        // 確保容器高度至少為視窗高度
+    }}
+  >
       {contextHolder}
 
       {/* 返回上一頁按鈕 */}
@@ -352,9 +359,10 @@ const SignUp = () => {
           <Button type="primary" htmlType="submit">
             註冊
           </Button>
+          
         </Form.Item>
       </Form>
-    </>
+    </div>
   );
 };
 export default SignUp;

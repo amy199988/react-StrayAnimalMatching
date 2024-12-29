@@ -24,7 +24,7 @@ const Lovehome = () => {
     <div
     style={{
       display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", // 卡片自動適應寬度
+      gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", // 卡片自動適應寬度
       justifyContent: "center", // 卡片置中
       gap: "20px",              // 卡片之間的固定間距
       padding: "20px",          // 父容器內部的間距
@@ -42,7 +42,7 @@ const Lovehome = () => {
                 overflow: "hidden",
                 display: "flex",
                 flexDirection: "column",
-                justifyContent: "stretch",
+                justifyContent: "space-between",
                 }}
               cover={
                 <div

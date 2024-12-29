@@ -85,21 +85,26 @@ const AllRequestlist = () => {
     {
       title: "領養表單編號",
       dataIndex: "request_number",
+      align: "center",
     },
     {
       title: "申請領養者名稱",
       dataIndex: "applicant",
+      align: "center",
     },
     {
       title: "貓咪名稱",
       dataIndex: "adoptedcat",
+      align: "center",
     },
     {
       title: "申請日期",
       dataIndex: "request_date",
+      align: "center",
     },
     {
       title: "申請狀況",
+      align: "center",
       dataIndex: "request_status",
       render: (status) => statusBadge(status),
       filters: [
@@ -120,12 +125,14 @@ const AllRequestlist = () => {
     },
     {
       title: "屬於中途之家",
+      align: "center",
       dataIndex: "lovehome",
       filters: LovehomeFilters,
       onFilter: (value, record) => record.lovehome.startsWith(value),
     },
     {
       title: "操作",
+      align: "center",
       valueType: "option",
       render: (_, record) => (
         <Space size="middle">

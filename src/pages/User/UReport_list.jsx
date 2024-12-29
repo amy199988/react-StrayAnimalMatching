@@ -41,27 +41,32 @@ const UReportList = () => {
   const columns = [
     {
       title: "通報救援編號",
+      align: "center",
       dataIndex: "report_number",
       readonly: true,
     },
     {
       title: "通報救援者名稱",
+      align: "center",
       dataIndex: "reporter",
       readonly: true,
     },
     {
       title: "通報區域",
+      align: "center",
       dataIndex: "reportDistrict",
       readonly: true,
     },
     {
       title: "通報日期",
+      align: "center",
       dataIndex: "reportDate",
       valueType: "date",
       readonly: true,
     },
     {
       title: "通報狀況",
+      align: "center",
       dataIndex: "reportStatus",
       valueType: "select",
       valueEnum: {
@@ -81,6 +86,7 @@ const UReportList = () => {
     },
     {
       title: "操作",
+      align: "center",
       valueType: "option",
       render: (_, record) => (
         <Space size="middle">

@@ -3,30 +3,23 @@ import {
   DrawerForm,
   ProForm,
   ProFormText,
+  ProFormSelect,
+  ProFormDatePicker,
 } from "@ant-design/pro-components";
-import { Table, Space, message, Form, Button ,Popconfirm } from "antd";
+import { Table, Space, message, Form, Button, Popconfirm } from "antd";
 import moment from "moment";
 import { allUserData, updateUser, deleteUser } from "../../services/managerService";
 
 const AllUserlist = () => {
   const [drawerVisit, setDrawerVisit] = useState(false);
   const [userlistData, setuserlistData] = useState([]);
-  //  const [fileList, setFileList] = useState([]);
   const [messageApi, contextHolder] = message.useMessage();
   const [selecteduser, setSelecteduser] = useState(null);
   const [form] = Form.useForm();
-  //  const [RoleFilters, setRoleFilters] = useState([]);
 
   const handleGoBack = () => {
     window.location.href = "/manager";
   };
-
-  // 處理下拉選單值改變
-  const handleStatusChange = (value) => {
-    console.log("選擇的狀態:", value);
-    setStatus(value);
-  };
-
 
   const fetchUserList = async () => {
     try {
@@ -43,6 +36,7 @@ const AllUserlist = () => {
         email: user.email,
         active: user.active,
         role: user.role,
+        lineid:user.lineid,
       }));
       console.log(users);
       setuserlistData(users);
@@ -130,6 +124,7 @@ const AllUserlist = () => {
         email: user.email,
         active: user.active,
         role: user.role,
+        lineid:user.lineid,
       });
       setDrawerVisit(true);
     }
@@ -139,18 +134,22 @@ const AllUserlist = () => {
     {
       title: "ID",
       dataIndex: "userId",
+      align: "center",
     },
     {
       title: "名稱",
       dataIndex: "userName",
+      align: "center",
     },
     {
       title: "帳號",
       dataIndex: "account",
+      align: "center",
     },
     {
       title: "會員類別",
       dataIndex: "role",
+      align: "center",
       render: (record) => {
         if (record === "role_user") {
           return "一般會員";
@@ -179,28 +178,38 @@ const AllUserlist = () => {
     {
       title: "電話",
       dataIndex: "phone",
+      align: "center",
     },
     {
       title: "生日",
       dataIndex: "birthdate",
+      align: "center",
     },
     {
       title: "電子郵件",
       dataIndex: "email",
+      align: "center",
+    },
+    {
+      title: "LINE",
+      align: "center",
+      dataIndex: "lineid",
+      render: (lineid) => (lineid ? "已綁定" : "未綁定"), // 如果 lineid 存在，顯示其值；否則顯示 "無"
     },
     {
       title: "帳號驗證",
       dataIndex: "active",
+      align: "center",
       render: (active) => {
-        return active === true ? "已驗證" : "未驗證";
+        return active === true ? "開通" : "未開通";
       },
       filters: [
         {
-          text: "已驗證",
+          text: "開通",
           value: true,
         },
         {
-          text: "未驗證",
+          text: "未開通",
           value: false,
         },
       ],
@@ -211,6 +220,7 @@ const AllUserlist = () => {
     },
     {
       title: "操作",
+      align: "center",
       dataIndex: "action",
       width: "10%",
       render: (_, record) => (
@@ -232,8 +242,8 @@ const AllUserlist = () => {
   ];
 
   return (
-    <>   
-    {contextHolder}
+    <>
+      {contextHolder}
       {/* 返回上一頁按鈕 */}
       <Button
         onClick={handleGoBack}
@@ -274,7 +284,47 @@ const AllUserlist = () => {
           setDrawerVisit(open);
         }}
       >
-        <ProFormText readonly name="userId" label="會員編號" />
+        <ProForm.Group>
+          <ProFormText readonly name="userId" label="會員編號" />
+          <ProFormText
+            readonly
+            name="account"
+            label="會員帳號"
+          />
+          <ProFormText
+            readonly
+            name="role"
+            label="會員類別"
+            render={(value) => {
+              switch (value) {
+                case "role_user":
+                  return "一般會員";
+                case "role_lovehome":
+                  return "愛媽會員";
+                case "role_manager":
+                  return "管理員";
+                default:
+                  return value; // 顯示原始值
+              }
+            }}
+          />
+        </ProForm.Group>
+        <ProForm.Group>
+          <ProFormDatePicker
+            name="birthdate"
+            label="生日"
+            placeholder="請選擇生日" // 設置框內的提示文字
+            fieldProps={{
+              disabledDate: (current) => current && current > moment().endOf('day'), // 限制選擇日期不能超過今天
+            }}
+            rules={[
+              {
+                required: true,
+                message: "請選擇生日",
+              },
+            ]}
+          />
+        </ProForm.Group>
         <ProForm.Group>
           <ProFormText
             rules={[
@@ -286,18 +336,8 @@ const AllUserlist = () => {
             label="會員名稱"
             placeholder="請輸入名稱"
           />
-          <ProFormText
-            readonly
-            name="account"
-            label="會員帳號"
-          />
-
-          <ProFormText
-            readonly
-            name="role"
-            label="會員類別"
-          />
-
+        </ProForm.Group>
+        <ProForm.Group>
           <ProFormText
             rules={[
               {
@@ -307,12 +347,8 @@ const AllUserlist = () => {
             name="phone"
             label="電話"
           />
-
-          <ProFormText
-            readonly
-            name="birthdate"
-            label="生日"
-          />
+        </ProForm.Group>
+        <ProForm.Group>
           <ProFormText
             rules={[
               {
@@ -322,24 +358,24 @@ const AllUserlist = () => {
             name="email"
             label="信箱"
           />
-
-          <ProFormText
+        </ProForm.Group>
+        <ProForm.Group>
+          <ProFormSelect
+            name="active"
+            label="帳號狀態"
+            placeholder="請選擇帳號狀態" // 設置框內的提示文字
+            options={[
+              { value: true, label: "已驗證" },
+              { value: false, label: "未驗證" },
+            ]}
             rules={[
               {
                 required: true,
+                message: "請選擇帳號狀態",
               },
             ]}
-            name="active"
-            label="帳號狀態"
-            onChange={handleStatusChange}
-            options={[
-              { value: "true", label: "已驗證" },
-              { value: "false", label: "未驗證" },
-            ]}
           />
-
         </ProForm.Group>
-
       </DrawerForm>
     </>
   );

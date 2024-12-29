@@ -48,7 +48,7 @@ const Report = () => {
               window.location.href = "/auth/login"; // 跳轉到登入頁面
             },
           });
-        }, 1000);
+        }, 500);
       }
     };
 
@@ -140,7 +140,44 @@ const Report = () => {
   };
 
   return (
-    <ProForm form={form} onFinish={onFinish} autoFocusFirstInput>
+    <div
+    style={{
+      display: "flex",           // 使用 Flexbox 排版
+      justifyContent: "center",  // 水平置中
+      alignItems: "center",      // 垂直置中
+      minHeight: "auto",        // 確保容器高度至少為視窗高度
+    }}
+  >
+    <ProForm 
+    form={form} 
+    onFinish={onFinish} 
+    autoFocusFirstInput
+    style={{
+      width: "100%",
+      maxWidth: "600px",         // 設置表單最大寬度
+      background: "#fff",        // 可選：表單背景色
+      borderRadius: "8px",       // 可選：圓角設計
+      boxShadow: "4px 4px 8px rgba(0, 0, 0, 0.1)", // 可選：陰影
+      padding: "24px",           // 表單內邊距
+    }}
+    submitter={{
+      render: (props, doms) => {
+        return (
+          <div
+            style={{
+              display: "flex",        // 使用 Flexbox 排版
+              justifyContent: "center", // 讓按鈕居中
+              width: "100%",            // 確保按鈕區域占滿表單寬度
+              marginTop: "24px",        // 設置按鈕與表單內容的間距
+              gap: "8px",
+            }}
+          >
+            {doms}
+          </div>
+        );
+      },
+    }}
+    >
       {contextHolder}
       <ProFormText name="reported_account" label="通報人帳號" readonly />
       <ProForm.Group>
@@ -204,6 +241,7 @@ const Report = () => {
         />
       </ProForm.Group>
     </ProForm>
+    </div>
   );
 };
 export default Report;

@@ -129,7 +129,7 @@ const LRequestInfo = () => {
     },
     {
       key: "adoptedcat_age",
-      label: "貓咪年齡",
+      label: "貓咪年齡(月份)",
       children: requestData ? requestData.catDto.age : "加載中...",
     },
     {

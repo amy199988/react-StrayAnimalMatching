@@ -180,7 +180,7 @@ const Lovemom = () => {
               <Input />
             </Form.Item>
 
-            <Form.Item name="currentOccupancy" label="目前佔用率">
+            <Form.Item name="currentOccupancy" label="目前佔用率(%)">
               <Input />
             </Form.Item>
 

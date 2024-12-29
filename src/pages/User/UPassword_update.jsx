@@ -125,10 +125,10 @@ const UpdatePassword = () => {
 
         <Form.Item>
           <Space>
-            <SubmitButton form={form}>送出更改</SubmitButton>
             <Button htmlType="reset" onClick={() => form.resetFields()}>
               重設
             </Button>
+            <SubmitButton form={form}>送出更改</SubmitButton>
           </Space>
         </Form.Item>
       </Form>

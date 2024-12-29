@@ -152,46 +152,56 @@ const AllLovehomelist = () => {
     {
       title: "ID",
       dataIndex: "lovehomeId",
+      align: "center",
     },
     {
       title: "名稱",
       dataIndex: "lovehomeName",
+      align: "center",
     },
     {
       title: "城市",
       dataIndex: "lovehomeCity",
+      align: "center",
       filters: CityFilters,
       onFilter: (value, record) => record.lovehomeCity.startsWith(value),
     },
     {
       title: "地區",
       dataIndex: "lovehomeDistrict",
+      align: "center",
     },
     {
       title: "地址",
       dataIndex: "lovehomeAddress",
+      align: "center",
     },
     {
       title: "聯絡方式",
       dataIndex: "contactInfo",
+      align: "center",
     },
     {
       title: "可收容量",
       dataIndex: "capacity",
+      align: "center",
     },
     {
-      title: "目前佔用率",
+      title: "目前佔用率(%)",
       dataIndex: "currentOccupancy",
+      align: "center",
     },
     {
       title: "照片",
       dataIndex: "lovehomeImage_Base64",
+      align: "center",
       render: (text, record) => {
         return record.lovehomeImage_Base64 ? "目前有照片" : "目前無照片";
       },
     },
     {
       title: "操作",
+      align: "center",
       dataIndex: "action",
       width: "10%",
       render: (_, record) => (
@@ -310,7 +320,7 @@ const AllLovehomelist = () => {
             label="可收容容量"
             placeholder="請輸入"
           />
-          <ProFormText readonly name="currentOccupancy" label="目前佔用率" />
+          <ProFormText readonly name="currentOccupancy" label="目前佔用率(%)" />
         </ProForm.Group>
         <ProFormUploadButton
           label="照片上傳"
