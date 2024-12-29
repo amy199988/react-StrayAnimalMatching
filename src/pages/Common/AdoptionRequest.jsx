@@ -132,7 +132,7 @@ export default function AdoptionRequest() {
           />
           <ProFormDigit
             name="age"
-            label="年齡(月份)"
+            label="年齡"
             placeholder="請輸入年齡"
             rules={[{ required: true, message: "這是必填項" }]}
           />

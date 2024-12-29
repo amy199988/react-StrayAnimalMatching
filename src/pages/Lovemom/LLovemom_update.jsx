@@ -216,7 +216,7 @@ const LUser_update = () => {
               <Input />
             </Form.Item>
 
-            <Form.Item name="currentOccupancy" label="目前佔用率" >
+            <Form.Item name="currentOccupancy" label="目前佔用率(%)" >
               <Input disabled />
             </Form.Item>
 

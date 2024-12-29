@@ -88,7 +88,7 @@ const Adoption = () => {
             key={cat.catId}
             style={{
               width: 250, // 卡片寬度跟隨父容器
-              height: 500,
+              height: 480,
               overflow: "hidden",
               display: "flex",
               flexDirection: "column",
